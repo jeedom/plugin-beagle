@@ -9,7 +9,7 @@ echo "*             Installation des dépendances             *"
 echo "********************************************************"
 sudo apt-get update
 echo 10 > ${PROGRESS_FILE}
-sudo apt-get -y install python3-pip python3-setuptools
+sudo apt-get -y install python3-pip python3-setuptools rfkill
 echo 20 > ${PROGRESS_FILE}
 sudo apt-get -y install python3-dev libffi-dev libssl-dev bluetooth build-essential python3-pip
 echo 25 > ${PROGRESS_FILE}
@@ -22,7 +22,12 @@ echo 75 > ${PROGRESS_FILE}
 sudo pip3 install wheel
 echo 80 > ${PROGRESS_FILE}
 sudo pip3 install cryptography
+echo 90 > ${PROGRESS_FILE}
+sudo pip3 install pybluez
 echo 99 > ${PROGRESS_FILE}
+sudo rfkill unblock 0 >/dev/null 2>&1
+sudo rfkill unblock 1 >/dev/null 2>&1
+sudo rfkill unblock 2 >/dev/null 2>&1
 sudo hciconfig hci0 up >/dev/null 2>&1
 sudo hciconfig hci1 up >/dev/null 2>&1
 sudo hciconfig hci2 up >/dev/null 2>&1
