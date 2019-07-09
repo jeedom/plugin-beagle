@@ -81,15 +81,6 @@ class beagle extends eqLogic {
     }
 
     public static function dependancy_install() {
-        $eqLogic = beagle::byLogicalId('beagle', 'beagle');
-        if (!is_object($eqLogic)) {
-            $eqLogic = new self();
-            $eqLogic->setLogicalId('beagle');
-            $eqLogic->setName('beagle');
-            $eqLogic->setIsEnable(1);
-            $eqLogic->setEqType_name('beagle');
-        }
-        $eqLogic->save();
         log::remove(__CLASS__ . '_update');
         return array('script' => dirname(__FILE__) . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder('beagle') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
     }
