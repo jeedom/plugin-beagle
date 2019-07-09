@@ -11,15 +11,20 @@ from cryptography.hazmat.primitives import cmac
 from cryptography.hazmat.primitives.ciphers import algorithms
 
 def build_trame(device,type,data =''):
+    Param = 'FF'
     targetUUID = device['uuid']
     cfModel = globals.cftarget[device['model']]
     header = globals.uniqueHeader+globals.types['gateway']+globals.headerVV+globals.headerFS
     if type == 'pair':
-        logging.debug('Building pairing data with key ' + str(device['key']))
-        data = globals.gateway['binding']+globals.uuidController+str(device['key'])
+        logging.debug('Building pairing data with key ' + str(globals.jeedomkey))
+        data = globals.gateway['binding']+globals.uuidController+str(globals.jeedomkey)
     else:
         dataAc = globals.ac[data['ac']]
-        data = globals.gateway['advertisement']+globals.uuidController+'01'+dataAc + cfModel +'FF'+targetUUID+'FFFFFF'
+        if device['model'] == 'scene':
+            Param = globals.scenes[device['type']]
+        else:
+            targetUUID = 'FF' + targetUUID
+        data = globals.gateway['advertisement']+globals.uuidController+'01'+dataAc + cfModel +targetUUID+Param+'FFFF'
         counter = str(random())
         data = data+counter
     return header+data
@@ -49,7 +54,7 @@ def sendCmd(device,type,data=''):
     trame = str(build_trame(device,type,data))
     logging.debug('Command data is ' + str(trame))
     buffer = compute(globals.donglemac,trame)
-    key = (globals.gateway['binding']+globals.uuidController+str(device['key'])).replace(' ','').lower()
+    key = (globals.gateway['binding']+globals.uuidController+str(globals.jeedomkey)).replace(' ','').lower()
     if type == 'pair':
         key = globals.uniquekey.replace(' ','').lower()
     hashed = hash(key,buffer)

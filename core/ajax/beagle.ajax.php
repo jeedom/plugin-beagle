@@ -41,6 +41,20 @@ try {
 		}
 		ajax::success($beagle->binding());
 	}
+	
+	if (init('action') == 'askscenes') {
+		foreach (beagle::byType('beagle') as $eqLogic) {
+            $eqLogic->getscenes(init('type'));
+        }
+		ajax::success();
+	}
+	
+	if (init('action') == 'askgroups') {
+		foreach (beagle::byType('beagle') as $eqLogic) {
+            $eqLogic->getgroups();
+        }
+		ajax::success();
+	}
 
   if (init('action') == 'autoDetectModule') {
 		$eqLogic = beagle::byId(init('id'));

@@ -1,8 +1,10 @@
 {
     "plug": {
         "name": "Prise",
+		"category" : {"automatism" :1},
         "configuration": {
-            "haspairing": 1
+            "haspairing": 1,
+            "hasscenes": 1
         },
         "commands": [{
               "name": "Etat",

@@ -58,7 +58,6 @@ class beagle extends eqLogic {
         $beagle->setIsVisible(1);
         $beagle->setConfiguration('device', $_def['model']);
         $beagle->setConfiguration('mac', $_def['mac']);
-        $beagle->setConfiguration('uniqueKey', self::generateKey());
         $beagle->save();
         event::add('jeedom::alert', array(
             'level' => 'warning',
@@ -104,6 +103,10 @@ class beagle extends eqLogic {
     public static function deamon_start() {
         self::deamon_stop();
         $deamon_info = self::deamon_info();
+        self::checkScenes();
+        if (config::byKey('jeedomKey', 'beagle','') == ''){
+            config::save('jeedomKey', self::generateKey(), 'beagle');
+        }
         if ($deamon_info['launchable'] != 'ok') {
             throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
         }
@@ -117,6 +120,7 @@ class beagle extends eqLogic {
         $cmd .= ' --callback ' . network::getNetworkAccess('internal', 'proto:127.0.0.1:port:comp') . '/plugins/beagle/core/php/jeeBeagle.php';
         $cmd .= ' --apikey ' . jeedom::getApiKey('beagle');
         $cmd .= ' --cycle ' . config::byKey('cycle', 'beagle');
+        $cmd .= ' --jeedomkey ' . config::byKey('jeedomKey', 'beagle');
         log::add('beagle', 'debug', 'Lancement démon beagle : ' . $cmd);
         $result = exec($cmd . ' >> ' . log::getPathToLog('beagle') . ' 2>&1 &');
         $i = 0;
@@ -156,6 +160,33 @@ class beagle extends eqLogic {
             usleep(500);
         }
     }
+	
+	 public static function checkScenes() {
+		$scenein = beagle::byLogicalId('09FFFFFF', 'beagle');
+		if (!is_object($scenein)) {
+			$scenein = new self();
+			$scenein->setLogicalId('09FFFFFF');
+			$scenein->setName('Scene In');
+			$scenein->setIsEnable(1);
+			$scenein->setIsVisible(1);
+			$scenein->setConfiguration('device','scene');
+			$scenein->setConfiguration('type','schneider');
+			$scenein->setEqType_name('beagle');
+			$scenein->save();
+		}
+		$sceneout = beagle::byLogicalId('0AFFFFFF', 'beagle');
+		if (!is_object($sceneout)) {
+			$sceneout = new self();
+			$sceneout->setLogicalId('0AFFFFFF');
+			$sceneout->setName('Scene Out');
+			$sceneout->setIsEnable(1);
+			$sceneout->setIsVisible(1);
+			$sceneout->setConfiguration('device','scene');
+			$sceneout->setConfiguration('type','schneider');
+			$sceneout->setEqType_name('beagle');
+			$sceneout->save();
+		}
+	}
 
     public static function devicesParameters($_device = '') {
         $return = array();
@@ -201,12 +232,16 @@ class beagle extends eqLogic {
     public function getModelListParam($_conf = '') {
   		$json = self::devicesParameters($_conf);
   		$haspairing = false;
+  		$hasFirmMac = false;
   		if (isset($json['configuration'])) {
   			if (isset($json['configuration']['haspairing']) && $json['configuration']['haspairing'] == 1) {
   				$haspairing = true;
   			}
   		}
-  		return [$haspairing];
+		if (!in_array($_conf,array('scene','groupe'))){
+			$hasFirmMac = True;
+		}
+  		return [$haspairing,$hasFirmMac];
   	}
 
     public static function socket_connection($_value) {
@@ -236,8 +271,8 @@ class beagle extends eqLogic {
             $value['device'] = array(
                 'uuid' => $this->getLogicalId(),
                 'model' => $this->getConfiguration('device',''),
-                'key' => $this->getConfiguration('uniqueKey',''),
                 'mac' => $this->getConfiguration('mac',''),
+                'type' => $this->getConfiguration('type',''),
             );
             $value = json_encode($value);
             self::socket_connection($value);
@@ -280,11 +315,35 @@ class beagle extends eqLogic {
       if ($this->getLogicalId() == '') {
           return;
       }
-      if ($this->getConfiguration('device','switch') == 'switch') {
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug'))) {
           return;
       }
       $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'bind', 'uuid' => $this->getLogicalId()));
       self::socket_connection($value);
+  }
+  
+  public function getgroups() {
+      if ($this->getLogicalId() == '') {
+          return;
+      }
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug'))) {
+          return;
+      }
+      $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => "groups")));
+      self::socket_connection($value);
+      sleep(1);
+  }
+  
+  public function getscenes($_type) {
+      if ($this->getLogicalId() == '') {
+          return;
+      }
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug'))) {
+          return;
+      }
+      $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => $_type)));
+      self::socket_connection($value);
+      sleep(1);
   }
 }
 
@@ -318,7 +377,7 @@ class beagleCmd extends cmd {
    			return;
    		}
    		$value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $eqLogic->getLogicalId(), 'command' => $data));
-      $socket = socket_create(AF_INET, SOCK_STREAM, 0);
+		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
   		socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'beagle'));
   		socket_write($socket, $value, strlen($value));
   		socket_close($socket);

@@ -43,12 +43,23 @@ if (config::byKey('include_mode', 'beagle', 0) == 1) {
 	<br/>
     <span>{{Santé}}</span>
   </div>
+  <div class="cursor logoSecondary" id="bt_askscenes">
+      <i class="fas fa-picture-o"></i>
+	<br/>
+    <span>{{Scènes}}</span>
+  </div>
+  <div class="cursor logoSecondary" id="bt_askgroups">
+      <i class="fas fa-list-alt"></i>
+	<br/>
+    <span>{{Groupes}}</span>
+  </div>
 </div>
-<legend><i class="fa fa-table"></i>  {{Mes devices beagle}}</legend>
 <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+<legend><i class="fa fa-table"></i>  {{Mes devices Beagle}}</legend>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
+	if (!in_array($eqLogic->getConfiguration('device',''),array('scene','group'))){
 	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
@@ -59,6 +70,45 @@ foreach ($eqLogics as $eqLogic) {
 	echo '<br/>';
 	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
 	echo '</div>';
+	}
+}
+?>
+</div>
+<legend><i class="fas fa-picture-o"></i>  {{Mes scènes Beagle}}</legend>
+<div class="eqLogicThumbnailContainer">
+  <?php
+foreach ($eqLogics as $eqLogic) {
+	if (in_array($eqLogic->getConfiguration('device',''),array('scene'))){
+	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
+		echo '<img class="lazy" src="plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png"/>';
+	} else {
+		echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+	}
+	echo '<br/>';
+	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+	echo '</div>';
+	}
+}
+?>
+</div>
+<legend><i class="fas fa-list-alt"></i>  {{Mes groupes Beagle}}</legend>
+<div class="eqLogicThumbnailContainer">
+  <?php
+foreach ($eqLogics as $eqLogic) {
+	if (in_array($eqLogic->getConfiguration('device',''),array('groupe'))){
+	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
+		echo '<img class="lazy" src="plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png"/>';
+	} else {
+		echo '<img src="' . $plugin->getPathImgIcon() . '"/>';
+	}
+	echo '<br/>';
+	echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+	echo '</div>';
+	}
 }
 ?>
 </div>
@@ -68,6 +118,8 @@ foreach ($eqLogics as $eqLogic) {
  <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
  <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
  <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
+ <a class="btn btn-danger pull-right" id="bt_autoDetectModule"><i class="fas fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
+ <a class="btn btn-warning pull-right haspairing" id="bt_pairing"><i class="fas fa-barcode" title="{{Trame pairing}}"></i>  {{Trame pairing}}</a>
  <ul class="nav nav-tabs" role="tablist">
   <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
   <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
@@ -124,13 +176,6 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
     </form>
   </div>
   <div class="col-sm-6">
-		<div class="form-group">
-			<label class="col-sm-2 control-label"></label>
-			<div class="col-sm-8">
-				<a class="btn btn-danger" id="bt_autoDetectModule"><i class="fas fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
-			</div>
-		</div>
-
 <div class="form-group">
 <center>
   <img src="core/img/no_image.gif" data-original=".jpg" id="img_device" class="img-responsive" style="max-height : 250px;"/>
@@ -144,35 +189,25 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
           <div class="col-sm-3">
             <span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="configuration" data-l2key="device"></span>
           </div>
-          <label class="col-sm-2 control-label">{{Mac}}</label>
-          <div class="col-sm-3">
-            <span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="configuration" data-l2key="mac"></span>
-          </div>
-        </div>
-		<div class="form-group">
-			<label class="col-sm-3 control-label">{{Clé}}</label>
-			<div class="col-sm-3">
-				<span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="configuration" data-l2key="uniqueKey"></span>
-			</div>
-          <label class="col-sm-2 control-label">{{Uuid}}</label>
+           <label class="col-sm-2 control-label">{{Uuid}}</label>
           <div class="col-sm-3">
             <span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="logicalId"></span>
           </div>
         </div>
-				<div class="form-group">
-					<label class="col-sm-3 control-label">{{Firmware}}</label>
+		<div class="form-group hasFirmMac">
+		<label class="col-sm-3 control-label">{{Firmware}}</label>
 					<div class="col-sm-3">
 						<span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="configuration" data-l2key="firmware"></span>
 					</div>
-						</div>
+			<label class="col-sm-2 control-label">{{Mac}}</label>
+          <div class="col-sm-3">
+            <span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="configuration" data-l2key="mac"></span>
+          </div>
+		</div>
 		<div class="form-group haspairing">
 			<label class="col-sm-3 control-label">{{Pairé}}</label>
 			<div class="col-sm-3">
 				<span class="eqLogicAttr label label-info" style="font-size:1em;cursor: default;" data-l1key="configuration" data-l2key="paired"></span>
-			</div>
-			<label class="col-sm-2 control-label">{{Pair}}</label>
-			<div class="col-sm-3">
-				<a class="btn btn-warning pairing" id="bt_pairing"><i class="fa fa-qrcode"></i>  {{Trame Pairing}}</a>
 			</div>
         </div>
 	</fieldset>

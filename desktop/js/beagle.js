@@ -119,7 +119,7 @@ $('body').on('beagle::includeState', function (_event,_options) {
 
 $('body').off('beagle::includeDevice').on('beagle::includeDevice', function (_event,_options) {
   if (modifyWithoutSave) {
-    $('#div_inclusionAlert').showAlert({message: '{{Un périphérique vient d\'être inclu/exclu. Veuillez réactualiser la page}}', level: 'warning'});
+    $('#div_inclusionAlert').showAlert({message: '{{Un périphérique vient d\'être inclu. Veuillez réactualiser la page}}', level: 'warning'});
   } else {
     if (_options == '') {
       window.location.reload();
@@ -213,6 +213,96 @@ $('#bt_autoDetectModule').on('click', function () {
 
 });
 
+$('#bt_askscenes').on('click', function () {
+	var dialog_title = '{{Recharge configuration}}';
+	var dialog_message = '<form class="form-horizontal onsubmit="return false;"> ';
+	dialog_title = '{{Recharger la configuration}}';
+	dialog_message += '<label class="control-label" > {{Sélectionner le type de scènes que vous voulez rafraichir !}} </label> ' +
+	'<div> <div class="radio"> <label > ' +
+	'<input type="radio" name="command" id="command-0" value="0" checked="checked"> {{Les scènes Schneider}} </label> ' +
+	'</div><div class="radio"> <label > ' +
+	'<input type="radio" name="command" id="command-1" value="1"> {{Les scènes Customers}}</label> ' +
+	'</div> ' +
+	'</div><br>';
+	dialog_message += '</form>';
+	bootbox.dialog({
+		title: dialog_title,
+		message: dialog_message,
+		buttons: {
+			"{{Annuler}}": {
+				className: "btn-danger",
+				callback: function () {
+				}
+			},
+			success: {
+				label: "{{Démarrer}}",
+				className: "btn-success",
+				callback: function () {
+					if ($("input[name='command']:checked").val() == "0"){
+						var name = 'Schneider';
+						var type = 'schneiderScenes';
+					} else {
+						var name = 'Customers';
+						var type = 'customerScenes';
+					}
+					bootbox.confirm('{{Etes-vous sûr de vouloir demander à tous les modules leurs scènes }}' + name + '{{ ? Cela peut durer un petit moment.}}', function (result) {
+						if (result) {
+							$('#div_alert').showAlert({message: '{{Demande de scènes }}' + name + '{{ en cours ...}}', level: 'warning'});
+							$.ajax({
+								type: "POST",
+								url: "plugins/beagle/core/ajax/beagle.ajax.php",
+								data: {
+									action: "askscenes",
+									type : type
+								},
+								dataType: 'json',
+								global: false,
+								error: function (request, status, error) {
+									handleAjaxError(request, status, error);
+								},
+								success: function (data) {
+									if (data.state != 'ok') {
+										$('#div_alert').showAlert({message: data.result, level: 'danger'});
+										return;
+									}
+									$('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+								}
+							});
+						}
+					});
+				}
+			}
+		}
+	});
+});
+
+$('#bt_askgroups').on('click', function () {
+    bootbox.confirm('{{Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.}}', function (result) {
+        if (result) {
+          $('#div_alert').showAlert({message: '{{Demande de groupes en cours ...}}', level: 'warning'});
+          $.ajax({
+            type: "POST",
+            url: "plugins/beagle/core/ajax/beagle.ajax.php",
+            data: {
+              action: "askgroups"
+            },
+            dataType: 'json',
+            global: false,
+            error: function (request, status, error) {
+              handleAjaxError(request, status, error);
+            },
+            success: function (data) {
+              if (data.state != 'ok') {
+                $('#div_alert').showAlert({message: data.result, level: 'danger'});
+                return;
+              }
+              $('#div_alert').showAlert({message: '{{Opération réalisée avec succès}}', level: 'success'});
+            }
+          });
+        }
+    });
+});
+
 function getModelListParam(_conf) {
   $.ajax({
     type: "POST",
@@ -235,6 +325,11 @@ function getModelListParam(_conf) {
         $(".haspairing").show();
       } else {
         $(".haspairing").hide();
+      }
+	  if (data.result[1] == true){
+        $(".hasFirmMac").show();
+      } else {
+        $(".hasFirmMac").hide();
       }
     }
   });

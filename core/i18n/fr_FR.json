@@ -72,7 +72,15 @@
         "Pairé": "Pairé",
         "Trame Pairing": "Trame Pairing",
         "Pair": "Pair",
-        "Firmware": "Firmware"
+        "Firmware": "Firmware",
+        "Mes scenes beagle": "Mes scenes beagle",
+        "Mes groupes beagle": "Mes groupes beagle",
+        "Scènes": "Scènes",
+        "Groupes": "Groupes",
+        "Mes devices Beagle": "Mes devices Beagle",
+        "Mes scènes Beagle": "Mes scènes Beagle",
+        "Mes groupes Beagle": "Mes groupes Beagle",
+        "Trame pairing": "Trame pairing"
     },
     "plugins\/beagle\/desktop\/js\/beagle.js": {
         "Nom": "Nom",
@@ -99,7 +107,21 @@
         "Liste": "Liste",
         "Afficher": "Afficher",
         "Historiser": "Historiser",
-        "Inverser": "Inverser"
+        "Inverser": "Inverser",
+        "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ? Cela peut durer un petit moment.": "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ? Cela peut durer un petit moment.",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.": "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.",
+        "Demande de scènes en cours ...": "Demande de scènes en cours ...",
+        "Demande de groupes en cours ...": "Demande de groupes en cours ...",
+        "Sélectionner le type de scènes que vous voulez rafraichir !": "Sélectionner le type de scènes que vous voulez rafraichir !",
+        "Les scènes Schneider": "Les scènes Schneider",
+        "Les scènes Customers": "Les scènes Customers",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ' + name + ' ? Cela peut durer un petit moment.": "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ' + name + ' ? Cela peut durer un petit moment.",
+        "Demande de scènes' + name + ' en cours ...": "Demande de scènes' + name + ' en cours ...",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ": "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ",
+        " ? Cela peut durer un petit moment.": " ? Cela peut durer un petit moment.",
+        "Demande de scènes ": "Demande de scènes ",
+        " en cours ...": " en cours ..."
     },
     "plugins\/beagle\/core\/class\/beagle.class.php": {
         "Nouveau module detecté ": "Nouveau module detecté ",

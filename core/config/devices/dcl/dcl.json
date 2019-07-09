@@ -1,8 +1,10 @@
 {
     "dcl": {
         "name": "DCL",
+		"category" : {"light" :1},
         "configuration": {
-            "haspairing": 1
+            "haspairing": 1,
+            "hasscenes": 1
         },
         "commands": [{
               "name": "Etat",
@@ -47,20 +49,20 @@
       				"logicalId": "ac:off",
       				"display": {
       					"icon": "<i class=\"icon jeedom-lumiere-off\"></i>"
-      			}
-          },
-    			{
-    				"name": "Toggle",
-    				"type": "action",
-    				"subtype": "other",
-    				"isVisible": 1,
-    				"isHistorized": 0,
-    				"unite": "",
-    				"logicalId": "ac:toggle",
-    				"display": {
-    					"icon": "<i class=\"icon techno-fleches\"></i>"
 					}
-    			}
+				},
+      			{
+      				"name": "Toggle",
+      				"type": "action",
+      				"subtype": "other",
+      				"isVisible": 1,
+      				"isHistorized": 0,
+      				"unite": "",
+      				"logicalId": "ac:toggle",
+      				"display": {
+      					"icon": "<i class=\"icon techno-fleches\"></i>"
+					}
+				}
         ]
     }
 }

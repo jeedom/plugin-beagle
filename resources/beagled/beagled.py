@@ -157,6 +157,7 @@ parser.add_argument("--cycle", help="Cycle to send event", type=str)
 parser.add_argument("--pid", help="Pid file", type=str)
 parser.add_argument("--device", help="Device", type=str)
 parser.add_argument("--sockethost", help="Socket Host", type=str)
+parser.add_argument("--jeedomkey", help="Jeedom Key", type=str)
 args = parser.parse_args()
 
 
@@ -176,9 +177,11 @@ if args.cycle:
     _cycle = float(args.cycle)
 if args.sockethost:
    _sockethost = args.sockethost
+if args.jeedomkey:
+   globals.jeedomkey = args.jeedomkey
 
 jeedom_utils.set_log_level(_log_level)
-logging.info('Start blead')
+logging.info('Start beagled')
 logging.info('Log level : '+str(_log_level))
 logging.info('Socket port : '+str(_socket_port))
 logging.info('Socket host : '+str(_sockethost))
@@ -187,18 +190,18 @@ logging.info('PID file : '+str(_pidfile))
 logging.info('Apikey : '+str(_apikey))
 logging.info('Callback : '+str(_callback))
 logging.info('Cycle : '+str(_cycle))
+logging.info('JeedomKey : '+str(globals.jeedomkey))
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)
 globals.IFACE_DEVICE = int(_device[-1:])
 
-
-cmd = "hciconfig"
-device_id = _device
-status, output = subprocess.getstatusoutput(cmd)
-bt_mac = output.split("{}:".format(device_id))[1].split("BD Address: ")[1].split(" ")[0].strip()
-logging.debug('Bluetooth Mac adress is ' + bt_mac)
-globals.donglemac = bt_mac
 try:
+    cmd = "hciconfig"
+    device_id = _device
+    status, output = subprocess.getstatusoutput(cmd)
+    bt_mac = output.split("{}:".format(device_id))[1].split("BD Address: ")[1].split(" ")[0].strip()
+    logging.debug('Bluetooth Mac adress is ' + bt_mac)
+    globals.donglemac = bt_mac
     jeedom_utils.write_pid(str(_pidfile))
     globals.JEEDOM_COM = jeedom_com(apikey = _apikey,url = _callback,cycle=_cycle)
     if not globals.JEEDOM_COM.test():

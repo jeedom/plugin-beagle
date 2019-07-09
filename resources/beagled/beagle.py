@@ -141,9 +141,46 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
-        elif self.cf == '11':
-            self.data['type'] = 'binding'
-            self.string += ' binding'
+            group1={}
+            group1uuid = self.trame[36:44]
+            group1[group1uuid]={}
+            self.string += ' group1 : ' +group1uuid
+            if self.trame[44:46] == '01':
+                group1[group1uuid]['value'] = '1'
+                group1[group1uuid]['label'] = 'Allumé'
+                self.string += ' state is ON'
+            elif self.trame[44:46] == '00':
+                group1[group1uuid]['value'] = '0'
+                group1[group1uuid]['label'] = 'Eteint'
+                self.string += ' state is OFF'
+            group2={}
+            group2uuid = self.trame[46:54]
+            group2[group2uuid]={}
+            self.string += ' group2 : ' +group2uuid
+            if self.trame[54:56] == '01':
+                group2[group2uuid]['value'] = '1'
+                group2[group2uuid]['label'] = 'Allumé'
+                self.string += ' state is ON'
+            elif self.trame[54:56] == '00':
+                group2[group2uuid]['value'] = '0'
+                group2[group2uuid]['label'] = 'Eteint'
+                self.string += ' state is OFF'
+            self.data['groups'] =[group1,group2]
+        elif self.cf == '1B':
+            self.data['type'] = 'group'
+            self.string += ' group'
+            self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
+            self.string += ' ' + str(self.data['groups'])
+        elif self.cf == '1C':
+            self.data['type'] = 'scene'
+            self.string += ' schneiderscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
+        elif self.cf == '1D':
+            self.data['type'] = 'scene'
+            self.string += ' customerscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
         return
     
     def shutter(self):
@@ -184,9 +221,67 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
+            group1={}
+            group1uuid = self.trame[36:44]
+            group1[group1uuid]={}
+            self.string += ' group1 : ' +group1uuid
+            if self.trame[44:46] == '00':
+                group1[group1uuid]['value'] = '100'
+                group1[group1uuid]['label'] = 'Ouvert'
+                self.string += ' state is opened'
+            elif self.trame[44:46] == '01':
+                group1[group1uuid]['value'] = '0'
+                group1[group1uuid]['label'] = 'Fermé'
+                self.string += ' state is closed'
+            elif self.trame[44:46] == '05':
+                group1[group1uuid]['label'] = 'Ouverture'
+                self.string += ' state is moving up'
+            elif self.trame[44:46] == '06':
+                group1[group1uuid]['label'] = 'Fermeture'
+                self.string += ' state is moving down'
+            elif self.trame[44:46] == '07':
+                group1[group1uuid]['label'] = 'Arrêté'
+                self.string += ' state is stopped'
+            group2={}
+            group2uuid = self.trame[46:54]
+            group2[group2uuid]={}
+            self.string += ' group2 : ' +group2uuid
+            if self.trame[54:56] == '00':
+                group2[group2uuid]['value'] = '100'
+                group2[group2uuid]['label'] = 'Ouvert'
+                self.string += ' state is opened'
+            elif self.trame[44:46] == '01':
+                group2[group2uuid]['value'] = '0'
+                group2[group2uuid]['label'] = 'Fermé'
+                self.string += ' state is closed'
+            elif self.trame[44:46] == '05':
+                group2[group2uuid]['label'] = 'Ouverture'
+                self.string += ' state is moving up'
+            elif self.trame[44:46] == '06':
+                group2[group2uuid]['label'] = 'Fermeture'
+                self.string += ' state is moving down'
+            elif self.trame[44:46] == '07':
+                group2[group2uuid]['label'] = 'Arrêté'
+                self.string += ' state is stopped'
+            self.data['groups'] =[group1,group2]
         elif self.cf == '31':
             self.data['type'] = 'binding'
             self.string += ' binding'
+        elif self.cf == '3B':
+            self.data['type'] = 'group'
+            self.string += ' group'
+            self.data['group'] = [self.trame[38:46],self.trame[46:54]]
+            self.string += ' ' + str(self.data['groups'])
+        elif self.cf == '3C':
+            self.data['type'] = 'scene'
+            self.string += ' schneiderscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
+        elif self.cf == '3D':
+            self.data['type'] = 'scene'
+            self.string += ' customerscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
         return
     
     def return_state(self,name):
