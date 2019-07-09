@@ -11,7 +11,7 @@ sudo apt-get update
 echo 10 > ${PROGRESS_FILE}
 sudo apt-get -y install python3-pip python3-setuptools rfkill
 echo 20 > ${PROGRESS_FILE}
-sudo apt-get -y install python3-dev libffi-dev libssl-dev bluetooth build-essential python3-pip
+sudo apt-get -y install python3-dev libffi-dev libssl-dev libbluetooth-dev bluetooth build-essential python3-pip
 echo 25 > ${PROGRESS_FILE}
 sudo pip3 install requests
 echo 35 > ${PROGRESS_FILE}
