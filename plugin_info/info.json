@@ -1,0 +1,15 @@
+{
+	"id" : "beagle",
+	"name" : "Beagle",
+	"description" : "Plugin ajoutant le support de la gamme Beagle Schneider à Jeedom",
+	"licence" : "AGPL",
+	"author" : "Jeedom SAS",
+	"require" : "3.2.12",
+	"category" : "automation protocol",
+	"hasDependency" : true,
+        "hasOwnDeamon" : true,
+        "changelog" : "https://jeedom.github.io/plugin-beagle/#language#/changelog",
+     "documentation" : "https://jeedom.github.io/plugin-beagle/#language#/",
+	"language" : ["fr_FR","en_US","de_DE","sp_SP","ru_RU","id_ID","it_IT"],
+	"compatibility" : ["miniplus","smart","rpi","docker","diy"]
+}
