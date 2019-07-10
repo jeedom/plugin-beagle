@@ -59,7 +59,7 @@ if (isset($result['devices'])) {
             if ($sceneUuid != 'FFFFFFFF') {
                 $scene = beagle::byLogicalId($sceneUuid, 'beagle');
           		  if (!is_object($scene)) {
-          			     $scene = new self();
+          			     $scene = new beagle();
           			     $scene->setLogicalId($sceneUuid);
           			     $scene->setName('Scene ' .$sceneUuid);
           	         $scene->setIsEnable(1);
@@ -79,12 +79,12 @@ if (isset($result['devices'])) {
             if ($groupUuid != 'FFFFFFFF') {
                 $group = beagle::byLogicalId($groupUuid, 'beagle');
           		  if (!is_object($group)) {
-          			     $group = new self();
+          			     $group = new beagle();
           			     $group->setLogicalId($groupUuid);
           			     $group->setName('Groupe ' .$groupUuid);
-          	         $group->setIsEnable(1);
+						$group->setIsEnable(1);
           			     $group->setIsVisible(1);
-          			     $group->setConfiguration('device','group'.$datas['data']['model']);
+          			     $group->setConfiguration('device','group'.$datas['model']);
           			     $group->setEqType_name('beagle');
           			     $group->save();
                 }
@@ -150,8 +150,18 @@ if (isset($result['devices'])) {
         if (isset($datas['data']['groups'])) {
           foreach ($datas['data']['groups'] as $key => $dataGroup){
             if ($key != 'ffffffff'){
-              log::add('beagle','debug', 'Group is ' . $key);
+              log::add('beagle','debug', 'Group info received for ' . $key);
               $group = beagle::byLogicalId($key, 'beagle');
+              if (!is_object($group)) {
+          			     $group = new beagle();
+          			     $group->setLogicalId($key);
+          			     $group->setName('Groupe ' .$key);
+						$group->setIsEnable(1);
+          			     $group->setIsVisible(1);
+          			     $group->setConfiguration('device','group'.$datas['model']);
+          			     $group->setEqType_name('beagle');
+          			     $group->save();
+                }
               if (!$group->getIsEnable()) {
                   continue;
               }

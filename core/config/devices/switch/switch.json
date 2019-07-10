@@ -1,6 +1,7 @@
 {
     "switch": {
         "name": "Interrupteur",
+		"category" : {"automatism" :1},
         "commands": [
             {
                 "name": "Bouton",

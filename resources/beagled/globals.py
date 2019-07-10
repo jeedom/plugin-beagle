@@ -16,7 +16,7 @@ headerVV = '01'
 headerFS = '01'
 uuidController = '443884'
 uniquekey = '9f5b9cced150d9d051b0b7da4c4e2de6'
-jeedomkey = '9f5b9cced150d9d051b0b7da4c4e2de6'
+jeedomkey = ''
 
 ac = {'off' : '00', 'on' : '01' , 'toggle' : '02','up':'05','down':'06','stop':'07','customerScenes' : '0C','schneiderScenes' : '0D' , 'groups' : '0B'}
 
