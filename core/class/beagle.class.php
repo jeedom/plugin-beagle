@@ -140,6 +140,8 @@ class beagle extends eqLogic {
         config::save('include_mode', 0, 'beagle');
         sleep(2);
     		self::sendIdToDeamon();
+        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'ready'));
+        self::socket_connection($value);
         return true;
     }
 
@@ -160,7 +162,7 @@ class beagle extends eqLogic {
             usleep(500);
         }
     }
-	
+
 	 public static function checkScenes() {
 		$scenein = beagle::byLogicalId('09FFFFFF', 'beagle');
 		if (!is_object($scenein)) {
@@ -245,6 +247,11 @@ class beagle extends eqLogic {
   	}
 
     public static function socket_connection($_value) {
+        $deamon_info = self::deamon_info();
+        if ($deamon_info['state'] != 'ok') {
+            log::add('beagle','debug','Daemon is not launched, please launch daemon');
+            return;
+        }
         if (config::byKey('port', 'beagle', 'none') != 'none') {
             $socket = socket_create(AF_INET, SOCK_STREAM, 0);
             socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'beagle'));
@@ -321,7 +328,7 @@ class beagle extends eqLogic {
       $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'bind', 'uuid' => $this->getLogicalId()));
       self::socket_connection($value);
   }
-  
+
   public function getgroups() {
       if ($this->getLogicalId() == '') {
           return;
@@ -333,7 +340,7 @@ class beagle extends eqLogic {
       self::socket_connection($value);
       sleep(1);
   }
-  
+
   public function getscenes($_type) {
       if ($this->getLogicalId() == '') {
           return;
@@ -377,11 +384,7 @@ class beagleCmd extends cmd {
    			return;
    		}
    		$value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $eqLogic->getLogicalId(), 'command' => $data));
-		$socket = socket_create(AF_INET, SOCK_STREAM, 0);
-  		socket_connect($socket, '127.0.0.1', config::byKey('socketport', 'beagle'));
-  		socket_write($socket, $value, strlen($value));
-  		socket_close($socket);
-
+		  beagle::socket_connection($value);
    	}
 
     /*     * **********************Getteur Setteur*************************** */

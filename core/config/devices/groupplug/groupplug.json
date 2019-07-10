@@ -1,10 +1,7 @@
 {
-    "plug": {
-        "name": "Prise",
+    "groupplug": {
+        "name": "Groupe Prises",
 		"category" : {"automatism" :1},
-        "configuration": {
-            "haspairing": 1
-        },
         "commands": [{
               "name": "Etat",
               "type": "info",

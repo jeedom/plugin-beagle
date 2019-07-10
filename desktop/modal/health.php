@@ -21,8 +21,8 @@ if (!isConnect('admin')) {
 $eqLogics = beagle::byType('beagle');
 $plugin = plugin::byId('beagle');
 ?>
-
-<table class="table table-condensed tablesorter" id="table_healthentrkey">
+<legend><i class="fa fa-table"></i>  {{Mes devices Beagle}}</legend>
+<table class="table table-condensed tablesorter" id="table_healthbeagle">
 	<thead>
 		<tr>
 			<th>{{Image}}</th>
@@ -32,7 +32,6 @@ $plugin = plugin::byId('beagle');
 			<th>{{Firmware}}</th>
 			<th>{{Uuid}}</th>
 			<th>{{Mac}}</th>
-			<th>{{Clé}}</th>
 			<th>{{Dernière communication}}</th>
 			<th>{{Date création}}</th>
 		</tr>
@@ -40,6 +39,7 @@ $plugin = plugin::byId('beagle');
 	<tbody>
 	 <?php
 foreach ($eqLogics as $eqLogic) {
+if (!in_array($eqLogic->getConfiguration('device',''),array('scene','groupdcl','groupshutter','groupplug'))){
 	$image = $plugin->getPathImgIcon();
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
 		$image = 'plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png';
@@ -52,9 +52,75 @@ foreach ($eqLogics as $eqLogic) {
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('firmware') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getLogicalId() . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('mac') . '</span></td>';
-	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('uniqueKey') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getStatus('lastCommunication') . '</span></td>';
 	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+}
+}
+?>
+	</tbody>
+</table>
+
+<legend><i class="fas fa-picture-o"></i>  {{Mes scènes Beagle}}</legend>
+<table class="table table-condensed tablesorter" id="table_healthbeagle">
+	<thead>
+		<tr>
+			<th>{{Image}}</th>
+			<th>{{Beagle}}</th>
+			<th>{{ID}}</th>
+			<th>{{Modèle}}</th>
+			<th>{{Uuid}}</th>
+			<th>{{Date création}}</th>
+		</tr>
+	</thead>
+	<tbody>
+	 <?php
+foreach ($eqLogics as $eqLogic) {
+if (in_array($eqLogic->getConfiguration('device',''),array('scene'))){
+	$image = $plugin->getPathImgIcon();
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
+		$image = 'plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png';
+	}
+	echo '<tr>';
+	echo '<td><img src="' . $image . '" height="55" width="55"/></td>';
+	echo '<td><span>' . $eqLogic->getHumanName(true) . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('device') . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getLogicalId() . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+}
+}
+?>
+	</tbody>
+</table>
+
+<legend><i class="fas fa-list-alt"></i>  {{Mes groupes Beagle}}</legend>
+<table class="table table-condensed tablesorter" id="table_healthbeagle">
+	<thead>
+		<tr>
+			<th>{{Image}}</th>
+			<th>{{Beagle}}</th>
+			<th>{{ID}}</th>
+			<th>{{Modèle}}</th>
+			<th>{{Uuid}}</th>
+			<th>{{Date création}}</th>
+		</tr>
+	</thead>
+	<tbody>
+	 <?php
+foreach ($eqLogics as $eqLogic) {
+if (in_array($eqLogic->getConfiguration('device',''),array('groupdcl','groupshutter','groupplug'))){
+	$image = $plugin->getPathImgIcon();
+	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
+		$image = 'plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png';
+	}
+	echo '<tr>';
+	echo '<td><img src="' . $image . '" height="55" width="55"/></td>';
+	echo '<td><span>' . $eqLogic->getHumanName(true) . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em; cursor : default;">' . $eqLogic->getId() . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('device') . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getLogicalId() . '</span></td>';
+	echo '<td><span class="label label-info" style="font-size : 1em;cursor:default;">' . $eqLogic->getConfiguration('createtime') . '</span></td></tr>';
+}
 }
 ?>
 	</tbody>

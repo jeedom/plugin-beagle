@@ -23,19 +23,20 @@ class Beagle():
         self.repeat = 0
         self.repeateruuid = ''
         self.numberrepeat = 0
-    
+
     def parse(self):
         try:
             if self.trame[0:14] in ['0201041bffb602','0201061bffb602']:
+                self.datatrame = self.trame[22:]
                 self.uuid=self.datatrame[2:8]
-                if self.uuid in globals.lastevent and globals.lastevent[self.uuid] == self.trame:
+                cleanedtrame = self.trame[0:30]+'00'+self.trame[32:]
+                if self.uuid in globals.lastevent and globals.lastevent[self.uuid] == cleanedtrame:
                     self.ignore=1
-                globals.lastevent[self.uuid] = self.trame
+                globals.lastevent[self.uuid] = cleanedtrame
                 self.result['mac'] = self.mac
                 self.string =''
                 self.string += 'Beagle found '
                 self.type = self.trame[14:18]
-                self.datatrame = self.trame[22:]
                 self.cf= self.datatrame[:2]
                 self.uuid=self.datatrame[2:8]
                 self.result['uuid'] = self.uuid
@@ -48,7 +49,7 @@ class Beagle():
                 if (self.repeat == 1) :
                     if (self.uuid in globals.KNOWN_DEVICES):
                         self.type = globals.types[globals.KNOWN_DEVICES[self.uuid]['model']]
-                        self.string += ' (repeated data) ' 
+                        self.string += ' (repeated data) '
                     else:
                         return
                 if self.type == '8e44':
@@ -89,7 +90,7 @@ class Beagle():
                     logging.debug('Thread return state switch prepared')
         except Exception as e:
             logging.debug(str(e))
-    
+
     def switch(self):
         self.result['model'] = 'switch'
         self.string += 'This is a switch with UUID ' + self.uuid
@@ -113,7 +114,7 @@ class Beagle():
             self.data['type'] = 'binding'
             self.string += ' binding'
         return
-    
+
     def dcl(self):
         self.result['model'] = 'dcl'
         self.string += 'This is a DCL with UUID '+ self.uuid
@@ -141,31 +142,29 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
-            group1={}
+            self.data['groups'] ={}
             group1uuid = self.trame[36:44]
-            group1[group1uuid]={}
+            self.data['groups'][group1uuid]={}
             self.string += ' group1 : ' +group1uuid
             if self.trame[44:46] == '01':
-                group1[group1uuid]['value'] = '1'
-                group1[group1uuid]['label'] = 'Allumé'
+                self.data['groups'][group1uuid]['value'] = '1'
+                self.data['groups'][group1uuid]['label'] = 'Allumé'
                 self.string += ' state is ON'
             elif self.trame[44:46] == '00':
-                group1[group1uuid]['value'] = '0'
-                group1[group1uuid]['label'] = 'Eteint'
+                self.data['groups'][group1uuid]['value'] = '0'
+                self.data['groups'][group1uuid]['label'] = 'Eteint'
                 self.string += ' state is OFF'
-            group2={}
             group2uuid = self.trame[46:54]
-            group2[group2uuid]={}
+            self.data['groups'][group2uuid]={}
             self.string += ' group2 : ' +group2uuid
             if self.trame[54:56] == '01':
-                group2[group2uuid]['value'] = '1'
-                group2[group2uuid]['label'] = 'Allumé'
+                self.data['groups'][group2uuid]['value'] = '1'
+                self.data['groups'][group2uuid]['label'] = 'Allumé'
                 self.string += ' state is ON'
             elif self.trame[54:56] == '00':
-                group2[group2uuid]['value'] = '0'
-                group2[group2uuid]['label'] = 'Eteint'
+                self.data['groups'][group2uuid]['value'] = '0'
+                self.data['groups'][group2uuid]['label'] = 'Eteint'
                 self.string += ' state is OFF'
-            self.data['groups'] =[group1,group2]
         elif self.cf == '1B':
             self.data['type'] = 'group'
             self.string += ' group'
@@ -173,16 +172,18 @@ class Beagle():
             self.string += ' ' + str(self.data['groups'])
         elif self.cf == '1C':
             self.data['type'] = 'scene'
+            self.data['subtype'] = 'schneider'
             self.string += ' schneiderscene'
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '1D':
             self.data['type'] = 'scene'
+            self.data['subtype'] = 'custom'
             self.string += ' customerscene'
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
-    
+
     def shutter(self):
         self.result['model'] = 'shutter'
         self.string += 'This is a Shutter with UUID '+ self.uuid
@@ -221,69 +222,68 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
-            group1={}
             group1uuid = self.trame[36:44]
-            group1[group1uuid]={}
+            self.data['groups'][group1uuid]={}
             self.string += ' group1 : ' +group1uuid
             if self.trame[44:46] == '00':
-                group1[group1uuid]['value'] = '100'
-                group1[group1uuid]['label'] = 'Ouvert'
+                self.data['groups'][group1uuid]['value'] = '100'
+                self.data['groups'][group1uuid]['label'] = 'Ouvert'
                 self.string += ' state is opened'
             elif self.trame[44:46] == '01':
-                group1[group1uuid]['value'] = '0'
-                group1[group1uuid]['label'] = 'Fermé'
+                self.data['groups'][group1uuid]['value'] = '0'
+                self.data['groups'][group1uuid]['label'] = 'Fermé'
                 self.string += ' state is closed'
             elif self.trame[44:46] == '05':
-                group1[group1uuid]['label'] = 'Ouverture'
+                self.data['groups'][group1uuid]['label'] = 'Ouverture'
                 self.string += ' state is moving up'
             elif self.trame[44:46] == '06':
-                group1[group1uuid]['label'] = 'Fermeture'
+                self.data['groups'][group1uuid]['label'] = 'Fermeture'
                 self.string += ' state is moving down'
             elif self.trame[44:46] == '07':
-                group1[group1uuid]['label'] = 'Arrêté'
+                self.data['groups'][group1uuid]['label'] = 'Arrêté'
                 self.string += ' state is stopped'
-            group2={}
             group2uuid = self.trame[46:54]
-            group2[group2uuid]={}
+            self.data['groups'][group2uuid]={}
             self.string += ' group2 : ' +group2uuid
             if self.trame[54:56] == '00':
-                group2[group2uuid]['value'] = '100'
-                group2[group2uuid]['label'] = 'Ouvert'
+                self.data['groups'][group2uuid]['value'] = '100'
+                self.data['groups'][group2uuid]['label'] = 'Ouvert'
                 self.string += ' state is opened'
             elif self.trame[44:46] == '01':
-                group2[group2uuid]['value'] = '0'
-                group2[group2uuid]['label'] = 'Fermé'
+                self.data['groups'][group2uuid]['value'] = '0'
+                self.data['groups'][group2uuid]['label'] = 'Fermé'
                 self.string += ' state is closed'
             elif self.trame[44:46] == '05':
-                group2[group2uuid]['label'] = 'Ouverture'
+                self.data['groups'][group2uuid]['label'] = 'Ouverture'
                 self.string += ' state is moving up'
             elif self.trame[44:46] == '06':
-                group2[group2uuid]['label'] = 'Fermeture'
+                self.data['groups'][group2uuid]['label'] = 'Fermeture'
                 self.string += ' state is moving down'
             elif self.trame[44:46] == '07':
-                group2[group2uuid]['label'] = 'Arrêté'
+                self.data['groups'][group2uuid]['label'] = 'Arrêté'
                 self.string += ' state is stopped'
-            self.data['groups'] =[group1,group2]
         elif self.cf == '31':
             self.data['type'] = 'binding'
             self.string += ' binding'
         elif self.cf == '3B':
             self.data['type'] = 'group'
             self.string += ' group'
-            self.data['group'] = [self.trame[38:46],self.trame[46:54]]
+            self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
             self.string += ' ' + str(self.data['groups'])
         elif self.cf == '3C':
             self.data['type'] = 'scene'
+            self.data['subtype'] = 'schneider'
             self.string += ' schneiderscene'
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '3D':
             self.data['type'] = 'scene'
+            self.data['subtype'] = 'custom'
             self.string += ' customerscene'
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
-    
+
     def return_state(self,name):
         try:
             time.sleep(2)

@@ -59,7 +59,7 @@ if (config::byKey('include_mode', 'beagle', 0) == 1) {
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
-	if (!in_array($eqLogic->getConfiguration('device',''),array('scene','group'))){
+	if (!in_array($eqLogic->getConfiguration('device',''),array('scene','groupdcl','groupshutter','groupplug'))){
 	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
@@ -97,7 +97,7 @@ foreach ($eqLogics as $eqLogic) {
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
-	if (in_array($eqLogic->getConfiguration('device',''),array('groupe'))){
+	if (in_array($eqLogic->getConfiguration('device',''),array('groupdcl','groupshutter','groupplug'))){
 	$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
 	echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {

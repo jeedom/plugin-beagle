@@ -57,6 +57,9 @@ def read_socket(name):
                     globals.LEARN_MODE = True
                     globals.LEARN_BEGIN = int(time.time())
                     globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 1});
+                elif message['cmd'] == 'ready':
+                    logging.debug('Daemon is ready')
+                    globals.READY = True
                 elif message['cmd'] == 'learnout':
                     logging.debug('Leave learn mode')
                     globals.LEARN_MODE = False
@@ -100,6 +103,8 @@ def listen():
         shutdown()
 
 def ble_scan(name):
+    while not globals.READY:
+        time.sleep(1)
     dev_id = globals.IFACE_DEVICE
     try:
         sock = bluez.hci_open_dev(dev_id)

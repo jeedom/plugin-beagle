@@ -1,10 +1,7 @@
 {
-    "shutter": {
-        "name": "Volet",
+    "groupshutter": {
+        "name": "Groupe Volets",
 		"category" : {"automatism" :1},
-        "configuration": {
-            "haspairing": 1
-        },
         "commands": [{
               "name": "Position",
               "type": "info",

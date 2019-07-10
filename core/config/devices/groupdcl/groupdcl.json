@@ -1,10 +1,7 @@
 {
-    "dcl": {
-        "name": "DCL",
-		"category" : {"light" :1},
-        "configuration": {
-            "haspairing": 1
-        },
+    "groupdcl": {
+        "name": "Groupe DCLs",
+		      "category" : {"light" :1},
         "commands": [{
               "name": "Etat",
               "type": "info",

@@ -150,6 +150,9 @@
         "Mac": "Mac",
         "Uuid": "Uuid",
         "Clé": "Clé",
-        "Firmware": "Firmware"
+        "Firmware": "Firmware",
+        "Mes devices Beagle": "Mes devices Beagle",
+        "Mes scènes Beagle": "Mes scènes Beagle",
+        "Mes groupes Beagle": "Mes groupes Beagle"
     }
 }

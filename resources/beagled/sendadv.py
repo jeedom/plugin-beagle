@@ -22,6 +22,8 @@ def build_trame(device,type,data =''):
         dataAc = globals.ac[data['ac']]
         if device['model'] == 'scene':
             Param = globals.scenes[device['type']]
+        if device['model'][0:5] == 'group':
+            Param = 'FB'
         else:
             targetUUID = 'FF' + targetUUID
         data = globals.gateway['advertisement']+globals.uuidController+'01'+dataAc + cfModel +targetUUID+Param+'FFFF'
