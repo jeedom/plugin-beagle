@@ -64,6 +64,7 @@ class beagle extends eqLogic {
             'page' => 'beagle',
             'message' => __('Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid'], __FILE__),
         ));
+        self::changeIncludeState(0,1);
         return $beagle;
     }
 
@@ -139,7 +140,7 @@ class beagle extends eqLogic {
         message::removeAll('beagle', 'unableStartDeamon');
         config::save('include_mode', 0, 'beagle');
         sleep(2);
-    		self::sendIdToDeamon();
+		self::sendIdToDeamon();
         $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'ready'));
         self::socket_connection($value);
         return true;
@@ -240,7 +241,7 @@ class beagle extends eqLogic {
   				$haspairing = true;
   			}
   		}
-		if (!in_array($_conf,array('scene','groupe'))){
+		if (!in_array(substr($_conf,0,5),array('scene','group'))){
 			$hasFirmMac = True;
 		}
   		return [$haspairing,$hasFirmMac];
@@ -322,7 +323,7 @@ class beagle extends eqLogic {
       if ($this->getLogicalId() == '') {
           return;
       }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug'))) {
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer'))) {
           return;
       }
       $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'bind', 'uuid' => $this->getLogicalId()));
@@ -333,7 +334,7 @@ class beagle extends eqLogic {
       if ($this->getLogicalId() == '') {
           return;
       }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug'))) {
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer'))) {
           return;
       }
       $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => "groups")));
@@ -345,7 +346,7 @@ class beagle extends eqLogic {
       if ($this->getLogicalId() == '') {
           return;
       }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug'))) {
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer'))) {
           return;
       }
       $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => $_type)));

@@ -39,7 +39,7 @@ $plugin = plugin::byId('beagle');
 	<tbody>
 	 <?php
 foreach ($eqLogics as $eqLogic) {
-if (!in_array($eqLogic->getConfiguration('device',''),array('scene','groupdcl','groupshutter','groupplug'))){
+if (!in_array(substr($eqLogic->getConfiguration('device',''),0,5),array('scene','group'))){
 	$image = $plugin->getPathImgIcon();
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
 		$image = 'plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png';
@@ -108,7 +108,7 @@ if (in_array($eqLogic->getConfiguration('device',''),array('scene'))){
 	<tbody>
 	 <?php
 foreach ($eqLogics as $eqLogic) {
-if (in_array($eqLogic->getConfiguration('device',''),array('groupdcl','groupshutter','groupplug'))){
+if (in_array(substr($eqLogic->getConfiguration('device',''),0,5),array('group'))){
 	$image = $plugin->getPathImgIcon();
 	if (file_exists(dirname(__FILE__) . '/../../core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png')) {
 		$image = 'plugins/beagle/core/config/devices/' . $eqLogic->getConfiguration('device') . '/' . $eqLogic->getConfiguration('device') . '.png';

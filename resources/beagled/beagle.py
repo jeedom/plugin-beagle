@@ -225,6 +225,7 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
+            self.data['groups'] ={}
             group1uuid = self.trame[36:44]
             self.data['groups'][group1uuid]={'data':{}}
             self.string += ' group1 : ' +group1uuid
