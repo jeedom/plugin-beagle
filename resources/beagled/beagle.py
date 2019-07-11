@@ -168,21 +168,21 @@ class Beagle():
         elif self.cf == '11':
             self.data['type'] = 'binding'
             self.string += ' binding'
-        elif self.cf == '1B':
+        elif self.cf == '1b':
             self.data['type'] = 'group'
             self.string += ' group'
             self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
             self.string += ' ' + str(self.data['groups'])
-        elif self.cf == '1C':
-            self.data['type'] = 'scene'
-            self.data['subtype'] = 'schneider'
-            self.string += ' schneiderscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
-            self.string += ' ' + str(self.data['scenes'])
-        elif self.cf == '1D':
+        elif self.cf == '1c':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
+        elif self.cf == '1d':
+            self.data['type'] = 'scene'
+            self.data['subtype'] = 'schneider'
+            self.string += ' schneiderscene'
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
@@ -269,21 +269,21 @@ class Beagle():
         elif self.cf == '31':
             self.data['type'] = 'binding'
             self.string += ' binding'
-        elif self.cf == '3B':
+        elif self.cf == '3b':
             self.data['type'] = 'group'
             self.string += ' group'
             self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
             self.string += ' ' + str(self.data['groups'])
-        elif self.cf == '3C':
-            self.data['type'] = 'scene'
-            self.data['subtype'] = 'schneider'
-            self.string += ' schneiderscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
-            self.string += ' ' + str(self.data['scenes'])
-        elif self.cf == '3D':
+        elif self.cf == '3c':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
+        elif self.cf == '3d':
+            self.data['type'] = 'scene'
+            self.data['subtype'] = 'schneider'
+            self.string += ' schneiderscene'
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
