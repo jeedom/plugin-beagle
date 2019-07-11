@@ -56,7 +56,7 @@ if (isset($result['devices'])) {
         if ($datas['data']['type'] == 'scene'){
           log::add('beagle','debug','This is a scene add');
           foreach ($datas['data']['scenes'] as $sceneUuid){
-            if ($sceneUuid != 'FFFFFFFF') {
+            if ($sceneUuid != 'ffffffff') {
                 $scene = beagle::byLogicalId($sceneUuid, 'beagle');
           		  if (!is_object($scene)) {
           			     $scene = new beagle();
@@ -76,7 +76,7 @@ if (isset($result['devices'])) {
         if ($datas['data']['type'] == 'group'){
           log::add('beagle','debug','This is a group add');
           foreach ($datas['data']['groups'] as $groupUuid){
-            if ($groupUuid != 'FFFFFFFF') {
+            if ($groupUuid != 'ffffffff') {
                 $group = beagle::byLogicalId($groupUuid, 'beagle');
           		  if (!is_object($group)) {
           			     $group = new beagle();
@@ -153,14 +153,7 @@ if (isset($result['devices'])) {
               log::add('beagle','debug', 'Group info received for ' . $key);
               $group = beagle::byLogicalId($key, 'beagle');
               if (!is_object($group)) {
-          			     $group = new beagle();
-          			     $group->setLogicalId($key);
-          			     $group->setName('Groupe ' .$key);
-						$group->setIsEnable(1);
-          			     $group->setIsVisible(1);
-          			     $group->setConfiguration('device','group'.$datas['model']);
-          			     $group->setEqType_name('beagle');
-          			     $group->save();
+					continue;
                 }
               if (!$group->getIsEnable()) {
                   continue;

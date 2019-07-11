@@ -104,7 +104,6 @@ class beagle extends eqLogic {
     public static function deamon_start() {
         self::deamon_stop();
         $deamon_info = self::deamon_info();
-        self::checkScenes();
         if (config::byKey('jeedomKey', 'beagle','') == ''){
             config::save('jeedomKey', self::generateKey(), 'beagle');
         }
@@ -163,33 +162,6 @@ class beagle extends eqLogic {
             usleep(500);
         }
     }
-
-	 public static function checkScenes() {
-		$scenein = beagle::byLogicalId('09FFFFFF', 'beagle');
-		if (!is_object($scenein)) {
-			$scenein = new self();
-			$scenein->setLogicalId('09FFFFFF');
-			$scenein->setName('Scene In');
-			$scenein->setIsEnable(1);
-			$scenein->setIsVisible(1);
-			$scenein->setConfiguration('device','scene');
-			$scenein->setConfiguration('type','schneider');
-			$scenein->setEqType_name('beagle');
-			$scenein->save();
-		}
-		$sceneout = beagle::byLogicalId('0AFFFFFF', 'beagle');
-		if (!is_object($sceneout)) {
-			$sceneout = new self();
-			$sceneout->setLogicalId('0AFFFFFF');
-			$sceneout->setName('Scene Out');
-			$sceneout->setIsEnable(1);
-			$sceneout->setIsVisible(1);
-			$sceneout->setConfiguration('device','scene');
-			$sceneout->setConfiguration('type','schneider');
-			$sceneout->setEqType_name('beagle');
-			$sceneout->save();
-		}
-	}
 
     public static function devicesParameters($_device = '') {
         $return = array();
