@@ -68,10 +68,30 @@ def sendCmd(device,type,data=''):
     send(finalpayload)
 
 def send(payload):
-    logging.debug('Sending Payload ' + str(payload))
-    #os.system('sudo hciconfig hci0 up')
-    os.system('sudo hcitool -i hci0 cmd 0x08 0x0008 1F '+ str(payload))
-    os.system('sudo hcitool -i hci0 cmd 0x08 0x0006 A0 00 A0 00 03 00 00 00 00 00 00 00 00 07 00')
-    os.system('sudo hcitool -i hci0 cmd 0x08 0x000a 01')
-    time.sleep(0.5)
-    os.system('sudo hcitool -i hci0 cmd 0x08 0x000a 00')
+    valid = checkpayload(payload)
+    if valid:
+        logging.debug('Payload is valid sending : ' + str(payload))
+        #os.system('sudo hciconfig hci0 up')
+        os.system('sudo hcitool -i hci0 cmd 0x08 0x0008 1F '+ str(payload))
+        os.system('sudo hcitool -i hci0 cmd 0x08 0x0006 A0 00 A0 00 03 00 00 00 00 00 00 00 00 07 00')
+        os.system('sudo hcitool -i hci0 cmd 0x08 0x000a 01')
+        time.sleep(0.5)
+        os.system('sudo hcitool -i hci0 cmd 0x08 0x000a 00')
+    else:
+        logging.debug('Invalid Payload : ' + str(payload))
+
+def checkpayload(payload):
+    result = True
+    logging.debug('Validating payload : ' + str(payload))
+    length = len(payload.replace(' ',''))
+    if int(length) == 62:
+        logging.debug('Correct Length for payload')
+    else:
+        logging.debug('Invalid Length for payload : ' + str(length) + ' we want 62')
+        result=False
+    if payload.replace(' ','')[0:22] == globals.uniqueHeader+globals.types['gateway']+globals.headerVV+globals.headerFS:
+        logging.debug('Correct header for payload')
+    else:
+        logging.debug('Incorrect header for payload ' + payload.replace(' ','')[0:22] + ' we want ' + globals.uniqueHeader+globals.types['gateway']+globals.headerVV+globals.headerFS)
+        result=False
+    return result

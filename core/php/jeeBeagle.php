@@ -62,12 +62,13 @@ if (isset($result['devices'])) {
           			     $scene = new beagle();
           			     $scene->setLogicalId($sceneUuid);
           			     $scene->setName('Scene ' .$sceneUuid);
-          	         $scene->setIsEnable(1);
+						$scene->setIsEnable(1);
           			     $scene->setIsVisible(1);
           			     $scene->setConfiguration('device','scene');
           			     $scene->setConfiguration('type',$datas['data']['subtype']);
           			     $scene->setEqType_name('beagle');
           			     $scene->save();
+						event::add('beagle::includeDevice','');
                 }
             }
           }
@@ -87,6 +88,7 @@ if (isset($result['devices'])) {
           			     $group->setConfiguration('device','group'.$datas['model']);
           			     $group->setEqType_name('beagle');
           			     $group->save();
+						event::add('beagle::includeDevice','');
                 }
             }
           }
@@ -111,7 +113,7 @@ if (isset($result['devices'])) {
                 'page' => 'beagle',
                 'message' => '',
             ));
-            event::add('beagle::includeDevice', $beagle->getId());
+            event::add('beagle::includeDevice','');
         }
         if (isset($datas['data']['paired'])){
             $beagle->setConfiguration('paired',$datas['data']['paired']);
