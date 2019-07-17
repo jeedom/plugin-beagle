@@ -25,9 +25,7 @@ sudo pip3 install cryptography
 echo 90 > ${PROGRESS_FILE}
 sudo pip3 install pybluez
 echo 99 > ${PROGRESS_FILE}
-sudo rfkill unblock 0 >/dev/null 2>&1
-sudo rfkill unblock 1 >/dev/null 2>&1
-sudo rfkill unblock 2 >/dev/null 2>&1
+sudo rfkill unblock all >/dev/null 2>&1
 sudo hciconfig hci0 up >/dev/null 2>&1
 sudo hciconfig hci1 up >/dev/null 2>&1
 sudo hciconfig hci2 up >/dev/null 2>&1
