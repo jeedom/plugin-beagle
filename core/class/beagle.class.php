@@ -110,8 +110,6 @@ class beagle extends eqLogic {
         if ($deamon_info['launchable'] != 'ok') {
             throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
         }
-        $result = exec($cmd . ' >> ' . log::getPathToLog('beagle') . ' 2>&1 &');
-        $unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
 		$unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
       	if (config::byKey('port', 'beagle','none') == 'none') {
           foreach (jeedom::getBluetoothMapping() as $name => $value) {
