@@ -68,10 +68,12 @@ def read_socket(name):
                     logging.debug('Add device : '+str(message['device']))
                     if 'uuid' in message['device']:
                         globals.KNOWN_DEVICES[message['device']['uuid']] = message['device']
+                    logging.debug('Known devices ' + str(globals.KNOWN_DEVICES))
                 elif message['cmd'] == 'remove':
                     logging.debug('Remove device : '+str(message['device']))
                     if 'uuid' in message['device']:
                         del globals.KNOWN_DEVICES[message['device']['uuid']]
+                    logging.debug('Known devices ' + str(globals.KNOWN_DEVICES))
                 elif message['cmd'] == 'bind':
                     logging.debug('Binding device : '+str(message['uuid']))
                     sendadv.sendCmd(globals.KNOWN_DEVICES[message['uuid']],'pair')

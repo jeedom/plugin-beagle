@@ -270,7 +270,7 @@ class beagle extends eqLogic {
         if ($this->getLogicalId() == '') {
             return;
         }
-        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'remove', 'device' => array('id' => $this->getLogicalId())));
+        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'remove', 'device' => array('uuid' => $this->getLogicalId())));
         self::socket_connection($value);
     }
 

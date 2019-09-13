@@ -44,7 +44,7 @@ if (config::byKey('include_mode', 'beagle', 0) == 1) {
     <span>{{Santé}}</span>
   </div>
   <div class="cursor logoSecondary" id="bt_askscenes">
-      <i class="fas fa-picture-o"></i>
+      <i class="fas fa-image"></i>
 	<br/>
     <span>{{Scènes}}</span>
   </div>
@@ -74,7 +74,7 @@ foreach ($eqLogics as $eqLogic) {
 }
 ?>
 </div>
-<legend><i class="fas fa-picture-o"></i>  {{Mes scènes Beagle}}</legend>
+<legend><i class="fas fa-image"></i>  {{Mes scènes Beagle}}</legend>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
@@ -115,11 +115,11 @@ foreach ($eqLogics as $eqLogic) {
 </div>
 
 <div class="col-lg-12 eqLogic" style="display: none;">
- <a class="btn btn-success eqLogicAction pull-right" data-action="save"><i class="fa fa-check-circle"></i> {{Sauvegarder}}</a>
- <a class="btn btn-danger eqLogicAction pull-right" data-action="remove"><i class="fa fa-minus-circle"></i> {{Supprimer}}</a>
- <a class="btn btn-default eqLogicAction pull-right" data-action="configure"><i class="fa fa-cogs"></i> {{Configuration avancée}}</a>
- <a class="btn btn-danger pull-right" id="bt_autoDetectModule"><i class="fas fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a>
- <a class="btn btn-warning pull-right haspairing" id="bt_pairing"><i class="fas fa-barcode" title="{{Trame pairing}}"></i>  {{Trame pairing}}</a>
+	<div class="input-group pull-right" style="display:inline-flex">
+			<span class="input-group-btn">
+				<a class="btn btn-danger btn-sm roundedLeft" id="bt_autoDetectModule"><i class="fas fa-search" title="{{Recréer les commandes}}"></i>  {{Recréer les commandes}}</a><a class="btn btn-warning btn-sm haspairing" id="bt_pairing"><i class="fas fa-barcode" title="{{Trame pairing}}"></i>  {{Trame pairing}}</a><a class="btn btn-default btn-sm eqLogicAction" data-action="configure"><i class="fas fa-cogs"></i> {{Configuration avancée}}</a><a class="btn btn-sm btn-success eqLogicAction" data-action="save"><i class="fas fa-check-circle"></i> {{Sauvegarder}}</a><a class="btn btn-danger btn-sm eqLogicAction roundedRight" data-action="remove"><i class="fas fa-minus-circle"></i> {{Supprimer}}</a>
+			</span>
+		</div> 
  <ul class="nav nav-tabs" role="tablist">
   <li role="presentation"><a href="#" class="eqLogicAction" aria-controls="home" role="tab" data-toggle="tab" data-action="returnToThumbnailDisplay"><i class="fa fa-arrow-circle-left"></i></a></li>
   <li role="presentation" class="active"><a href="#eqlogictab" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-tachometer"></i> {{Equipement}}</a></li>
@@ -152,7 +152,7 @@ foreach ($eqLogics as $eqLogic) {
                 <select class="eqLogicAttr form-control" data-l1key="object_id">
                   <option value="">Aucun</option>
                   <?php
-foreach (object::all() as $object) {
+foreach (jeeObject::all() as $object) {
 	echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
 }
 ?>

@@ -60,7 +60,7 @@ if (!in_array(substr($eqLogic->getConfiguration('device',''),0,5),array('scene',
 	</tbody>
 </table>
 
-<legend><i class="fas fa-picture-o"></i>  {{Mes scènes Beagle}}</legend>
+<legend><i class="fas fa-image"></i>  {{Mes scènes Beagle}}</legend>
 <table class="table table-condensed tablesorter" id="table_healthbeagle">
 	<thead>
 		<tr>

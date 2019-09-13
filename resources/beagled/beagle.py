@@ -50,8 +50,6 @@ class Beagle():
                     if (self.uuid in globals.KNOWN_DEVICES):
                         self.type = globals.types[globals.KNOWN_DEVICES[self.uuid]['model']]
                         self.string += ' (repeated data) '
-                    else:
-                        return
                 if self.type == '8e44':
                     self.switch()
                 elif self.type == '9844':
@@ -80,14 +78,12 @@ class Beagle():
                             return
                         else:
                             logging.debug('It\'s a beagle device but this device is not Included. I\'am learning it ' +str(self.uuid))
+                            globals.LEARN_MODE = False
                 else:
                     if self.uuid not in globals.KNOWN_DEVICES:
                         logging.debug('It\'s a beagle device but this device is not Included and its not a binding data ' +str(self.uuid))
                         return
                 globals.JEEDOM_COM.add_changes('devices::'+self.uuid,self.result)
-                if self.result['model'] == 'switch' and self.data['type'] != 'binding':
-                    thread.start_new_thread( self.return_state, ('return_state',))
-                    logging.debug('Thread return state switch prepared')
         except Exception as e:
             logging.debug(str(e))
 
@@ -98,16 +94,24 @@ class Beagle():
             self.data['type'] = 'advertisement'
             self.string += ' advertisement'
             self.data['firmware'] = self.trame[34:40]
-            if self.trame[32:34] == '02':
+            if self.trame[32:34] == '00':
+                self.data['value'] = '0'
+                self.data['label'] = 'Off'
+                self.string += ' action is off'
+            elif self.trame[32:34] == '01':
                 self.data['value'] = '1'
+                self.data['label'] = 'On'
+                self.string += ' action is on'
+            elif self.trame[32:34] == '02':
+                self.data['value'] = '2'
                 self.data['label'] = 'Toggle'
                 self.string += ' action is toggle'
             elif self.trame[32:34] == '05':
-                self.data['value'] = '2'
+                self.data['value'] = '5'
                 self.data['label'] = 'Haut'
                 self.string += ' action is up'
             elif self.trame[32:34] == '06':
-                self.data['value'] = '3'
+                self.data['value'] = '6'
                 self.data['label'] = 'Bas'
                 self.string += ' action is down'
         elif self.cf == '01':
@@ -287,12 +291,3 @@ class Beagle():
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
-
-    def return_state(self,name):
-        try:
-            time.sleep(2)
-            self.result['data']['value'] = '0'
-            self.result['data']['label'] = 'Aucun'
-            globals.JEEDOM_COM.add_changes('devices::'+self.uuid,self.result)
-        except Exception as e:
-            logging.debug(str(e))
