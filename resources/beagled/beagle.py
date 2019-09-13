@@ -106,6 +106,14 @@ class Beagle():
                 self.data['value'] = '2'
                 self.data['label'] = 'Toggle'
                 self.string += ' action is toggle'
+            elif self.trame[32:34] == '03':
+                self.data['value'] = '3'
+                self.data['label'] = 'Dim Up'
+                self.string += ' action is dim up'
+            elif self.trame[32:34] == '04':
+                self.data['value'] = '4'
+                self.data['label'] = 'Dim Down'
+                self.string += ' action is dim down'
             elif self.trame[32:34] == '05':
                 self.data['value'] = '5'
                 self.data['label'] = 'Haut'
@@ -114,6 +122,22 @@ class Beagle():
                 self.data['value'] = '6'
                 self.data['label'] = 'Bas'
                 self.string += ' action is down'
+            elif self.trame[32:34] == '07':
+                self.data['value'] = '7'
+                self.data['label'] = 'Stop'
+                self.string += ' action is stop'
+            elif self.trame[32:34] == '08':
+                self.data['value'] = '8'
+                self.data['label'] = 'Scene User'
+                self.string += ' action is scene user'
+            elif self.trame[32:34] == '09':
+                self.data['value'] = '9'
+                self.data['label'] = 'Scene In'
+                self.string += ' action is scene in'
+            elif self.trame[32:34].lower() == '0a':
+                self.data['value'] = '10'
+                self.data['label'] = 'Scene Out'
+                self.string += ' action is scene out'
         elif self.cf == '01':
             self.data['type'] = 'binding'
             self.string += ' binding'
