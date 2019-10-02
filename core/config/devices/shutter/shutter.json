@@ -5,19 +5,7 @@
         "configuration": {
             "haspairing": 1
         },
-        "commands": [{
-              "name": "Position",
-              "type": "info",
-              "subtype": "numeric",
-              "isVisible": 1,
-              "isHistorized": 1,
-              "unite": "%",
-              "logicalId": "data::value",
-				"template": {
-					"dashboard": "shutter",
-					"mobile": "shutter"
-				}
-          },
+        "commands": [
             {
                 "name": "Statut",
                 "type": "info",
@@ -26,7 +14,33 @@
                 "isHistorized": 1,
                 "unite": "",
                 "logicalId": "data::label"
-            },
+            },{
+              "name": "Position",
+              "type": "info",
+              "subtype": "numeric",
+              "isVisible": 0,
+              "isHistorized": 1,
+              "unite": "%",
+              "logicalId": "data::value",
+				"template": {
+					"dashboard": "shutter",
+					"mobile": "shutter"
+				}
+          },
+				{
+      				"name": "Positionnement",
+      				"type": "action",
+      				"subtype": "slider",
+      				"isVisible": 1,
+      				"isHistorized": 0,
+      				"unite": "",
+					"value": "Position",
+      				"logicalId": "ac:goto,options:#slider#",
+					"template": {
+						"dashboard": "timeShutter", 
+						"mobile": "timeShutter"
+					}
+      			},
       			{
       				"name": "Haut",
       				"type": "action",

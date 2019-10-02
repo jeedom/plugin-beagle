@@ -364,7 +364,7 @@ class beagleCmd extends cmd {
    			return;
    		}
    		$value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $eqLogic->getLogicalId(), 'command' => $data));
-		  beagle::socket_connection($value);
+		beagle::socket_connection($value);
    	}
 
     /*     * **********************Getteur Setteur*************************** */

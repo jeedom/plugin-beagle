@@ -26,6 +26,8 @@ def build_trame(device,type,data =''):
             Param = 'FB'
         else:
             targetUUID = 'FF' + targetUUID
+        if 'options' in data:
+            Param = hex(100-int(data['options']))[2:]
         data = globals.gateway['advertisement']+globals.uuidController+'01'+dataAc + cfModel +targetUUID+Param+'FFFF'
         counter = str(random())
         data = data+counter

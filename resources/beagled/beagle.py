@@ -232,13 +232,17 @@ class Beagle():
                 self.string += ' state is closed'
             elif self.trame[32:34] == '05':
                 self.data['label'] = 'Ouverture'
+                position = 100-int(self.trame[44:46],16)
+                self.data['value'] = position
                 self.string += ' state is moving up'
             elif self.trame[32:34] == '06':
                 self.data['label'] = 'Fermeture'
+                position = 100-int(self.trame[44:46],16)
+                self.data['value'] = position
                 self.string += ' state is moving down'
             elif self.trame[32:34] == '07':
                 self.data['label'] = 'Arrêté'
-                position = int(self.trame[44:46],16)
+                position = 100-int(self.trame[44:46],16)
                 self.data['value'] = position
                 self.string += ' state is stopped with position ' + str(position)
             elif self.trame[32:34] == '10':
