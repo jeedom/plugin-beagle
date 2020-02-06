@@ -21,12 +21,12 @@ if (!isConnect('admin')) {
 $eqLogics = beagle::byType('beagle');
 $plugin = plugin::byId('beagle');
 ?>
-<legend><i class="fa fa-table"></i>  {{Mes devices Beagle}}</legend>
+<legend><i class="fa fa-table"></i>  {{Mes devices Odace SFSP}}</legend>
 <table class="table table-condensed tablesorter" id="table_healthbeagle">
 	<thead>
 		<tr>
 			<th>{{Image}}</th>
-			<th>{{Beagle}}</th>
+			<th>{{Odace SFSP}}</th>
 			<th>{{ID}}</th>
 			<th>{{Modèle}}</th>
 			<th>{{Firmware}}</th>
@@ -60,12 +60,12 @@ if (!in_array(substr($eqLogic->getConfiguration('device',''),0,5),array('scene',
 	</tbody>
 </table>
 
-<legend><i class="fas fa-image"></i>  {{Mes scènes Beagle}}</legend>
+<legend><i class="fas fa-image"></i>  {{Mes scènes Odace SFSP}}</legend>
 <table class="table table-condensed tablesorter" id="table_healthbeagle">
 	<thead>
 		<tr>
 			<th>{{Image}}</th>
-			<th>{{Beagle}}</th>
+			<th>{{Odace SFSP}}</th>
 			<th>{{ID}}</th>
 			<th>{{Modèle}}</th>
 			<th>{{Uuid}}</th>
@@ -93,12 +93,12 @@ if (in_array($eqLogic->getConfiguration('device',''),array('scene'))){
 	</tbody>
 </table>
 
-<legend><i class="fas fa-list-alt"></i>  {{Mes groupes Beagle}}</legend>
+<legend><i class="fas fa-list-alt"></i>  {{Mes groupes Odace SFSP}}</legend>
 <table class="table table-condensed tablesorter" id="table_healthbeagle">
 	<thead>
 		<tr>
 			<th>{{Image}}</th>
-			<th>{{Beagle}}</th>
+			<th>{{Odace SFSP}}</th>
 			<th>{{ID}}</th>
 			<th>{{Modèle}}</th>
 			<th>{{Uuid}}</th>

@@ -1,7 +1,7 @@
 {
 	"id" : "beagle",
-	"name" : "Beagle",
-	"description" : "Plugin ajoutant le support de la gamme Beagle Schneider à Jeedom",
+	"name" : "Odace SFSP",
+	"description" : "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets/ scènes / simple / double). Il permet de contrôler les actionneurs (volet/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.",
 	"licence" : "AGPL",
 	"author" : "Jeedom SAS",
 	"require" : "3.2.12",

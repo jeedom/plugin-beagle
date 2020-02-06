@@ -16,7 +16,7 @@
  */
 
  $('#bt_healthbeagle').on('click', function () {
-    $('#md_modal').dialog({title: "{{Santé Beagle}}"});
+    $('#md_modal').dialog({title: "{{Santé Odace SFSP}}"});
     $('#md_modal').load('index.php?v=d&plugin=beagle&modal=health').dialog('open');
 });
 

@@ -55,7 +55,7 @@ if (config::byKey('include_mode', 'beagle', 0) == 1) {
   </div>
 </div>
 <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
-<legend><i class="fas fa-table"></i>  {{Mes devices Beagle}}</legend>
+<legend><i class="fas fa-table"></i>  {{Mes devices Odace SFSP}}</legend>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
@@ -74,7 +74,7 @@ foreach ($eqLogics as $eqLogic) {
 }
 ?>
 </div>
-<legend><i class="fas fa-image"></i>  {{Mes scènes Beagle}}</legend>
+<legend><i class="fas fa-image"></i>  {{Mes scènes Odace SFSP}}</legend>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
@@ -93,7 +93,7 @@ foreach ($eqLogics as $eqLogic) {
 }
 ?>
 </div>
-<legend><i class="fas fa-list-alt"></i>  {{Mes groupes Beagle}}</legend>
+<legend><i class="fas fa-list-alt"></i>  {{Mes groupes Odace SFSP}}</legend>
 <div class="eqLogicThumbnailContainer">
   <?php
 foreach ($eqLogics as $eqLogic) {
