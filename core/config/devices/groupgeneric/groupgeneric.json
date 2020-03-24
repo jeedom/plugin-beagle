@@ -1,0 +1,64 @@
+{
+    "groupgeneric": {
+        "name": "Groupe Generics",
+		      "category" : {"light" :1},
+        "commands": [{
+              "name": "Etat",
+              "type": "info",
+              "subtype": "binary",
+              "isVisible": 1,
+              "isHistorized": 1,
+              "logicalId": "data::value",
+				"template": {
+					"dashboard": "light",
+					"mobile": "light"
+				}
+          },
+            {
+                "name": "Statut",
+                "type": "info",
+                "subtype": "string",
+                "isVisible": 1,
+                "isHistorized": 1,
+                "unite": "",
+                "logicalId": "data::label"
+            },
+      			{
+      				"name": "On",
+      				"type": "action",
+      				"subtype": "other",
+      				"isVisible": 1,
+      				"isHistorized": 0,
+      				"unite": "",
+      				"logicalId": "ac:on",
+      				"display": {
+      					"icon": "<i class=\"icon jeedom-lumiere-on\"></i>"
+      				}
+      			},
+      			{
+      				"name": "Off",
+      				"type": "action",
+      				"subtype": "other",
+      				"isVisible": 1,
+      				"isHistorized": 0,
+      				"unite": "",
+      				"logicalId": "ac:off",
+      				"display": {
+      					"icon": "<i class=\"icon jeedom-lumiere-off\"></i>"
+					}
+				},
+      			{
+      				"name": "Toggle",
+      				"type": "action",
+      				"subtype": "other",
+      				"isVisible": 1,
+      				"isHistorized": 0,
+      				"unite": "",
+      				"logicalId": "ac:toggle",
+      				"display": {
+      					"icon": "<i class=\"icon techno-fleches\"></i>"
+					}
+				}
+        ]
+    }
+}

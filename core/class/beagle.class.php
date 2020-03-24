@@ -302,7 +302,7 @@ class beagle extends eqLogic {
       if ($this->getLogicalId() == '') {
           return;
       }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer'))) {
+      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer','generic'))) {
           return;
       }
       $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'bind', 'uuid' => $this->getLogicalId()));

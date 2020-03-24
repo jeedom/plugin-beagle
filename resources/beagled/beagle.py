@@ -56,6 +56,8 @@ class Beagle():
                     self.dcl()
                 elif self.type == '8f44':
                     self.shutter()
+                elif self.type == '9244':
+                    self.generic()
                 else:
                     logging.debug('Unknown type ' + str(self.type))
                     return
@@ -208,6 +210,78 @@ class Beagle():
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '1d':
+            self.data['type'] = 'scene'
+            self.data['subtype'] = 'schneider'
+            self.string += ' schneiderscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
+        return
+    
+    def generic(self):
+        self.result['model'] = 'generic'
+        self.string += 'This is a Generic with UUID '+ self.uuid
+        if self.cf == '20':
+            self.data['type'] = 'advertisement'
+            self.string += ' advertisement'
+            self.data['firmware'] = self.trame[58:62]
+            if self.trame[32:34] == '01':
+                self.data['value'] = '1'
+                self.data['label'] = 'Allumé'
+                self.string += ' state is ON'
+            elif self.trame[32:34] == '00':
+                self.data['value'] = '0'
+                self.data['label'] = 'Eteint'
+                self.string += ' state is OFF'
+            elif self.trame[32:34] == '10':
+                self.data['paired'] = 'denied'
+                self.string += ' pairing denied'
+            elif self.trame[32:34] == '11':
+                self.data['paired'] = 'ok'
+                self.string += ' pairing ok'
+            elif self.trame[32:34] == '12':
+                self.data['paired'] = 'paired'
+                self.string += ' paired'
+            elif self.trame[32:34] == '13':
+                self.data['paired'] = 'unpaired'
+                self.string += ' unpaired'
+            self.data['groups'] ={}
+            group1uuid = self.trame[36:44]
+            self.data['groups'][group1uuid]={'data':{}}
+            self.string += ' group1 : ' +group1uuid
+            if self.trame[44:46] == '01':
+                self.data['groups'][group1uuid]['data']['value'] = '1'
+                self.data['groups'][group1uuid]['data']['label'] = 'Allumé'
+                self.string += ' state is ON'
+            elif self.trame[44:46] == '00':
+                self.data['groups'][group1uuid]['data']['value'] = '0'
+                self.data['groups'][group1uuid]['data']['label'] = 'Eteint'
+                self.string += ' state is OFF'
+            group2uuid = self.trame[46:54]
+            self.data['groups'][group2uuid]={'data':{}}
+            self.string += ' group2 : ' +group2uuid
+            if self.trame[54:56] == '01':
+                self.data['groups'][group2uuid]['data']['value'] = '1'
+                self.data['groups'][group2uuid]['data']['label'] = 'Allumé'
+                self.string += ' state is ON'
+            elif self.trame[54:56] == '00':
+                self.data['groups'][group2uuid]['data']['value'] = '0'
+                self.data['groups'][group2uuid]['data']['label'] = 'Eteint'
+                self.string += ' state is OFF'
+        elif self.cf == '21':
+            self.data['type'] = 'binding'
+            self.string += ' binding'
+        elif self.cf == '2b':
+            self.data['type'] = 'group'
+            self.string += ' group'
+            self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
+            self.string += ' ' + str(self.data['groups'])
+        elif self.cf == '2c':
+            self.data['type'] = 'scene'
+            self.data['subtype'] = 'custom'
+            self.string += ' customerscene'
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.string += ' ' + str(self.data['scenes'])
+        elif self.cf == '2d':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'schneider'
             self.string += ' schneiderscene'
