@@ -109,5 +109,8 @@
         "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']": "Module succesfully included  ' .$_def['model'].' ' . $_def['uuid']",
         "Veuillez vérifier la configuration": "Please check the configuration",
         "Périphérique reconnu, intégration en cours": "Recognized device, integration in progress"
+    },
+    "info.json": {
+        "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.": "Plugin adding support for the Odace SFSP range (wireless without battery) Schneider to Jeedom. It is used to obtain information from the switches (shutters \/ scenes \/ single \/ double). It is used to control the actuators (shutter \/ dcl). It also allows you to use scenes and groups"
     }
 }

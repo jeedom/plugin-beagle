@@ -6,7 +6,7 @@ Este complemento es un complemento que permite la compatibilidad con la gama Oda
 
 # Configuración 
 
-## Configuración du plugin : 
+## Configuración del plugin : 
 
 > **Punta**
 >

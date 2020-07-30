@@ -30,7 +30,7 @@
         "Lancer Scan": "Starten Sie den Scan",
         "Configuration": "Konfiguration",
         "Santé": "Gesundheit",
-        "Scènes": "",
+        "Scènes": "Szenen",
         "Groupes": "Gruppen",
         "Rechercher": "Suchen nach",
         "Mes devices Odace SFSP": "",
@@ -109,5 +109,8 @@
         "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']": "",
         "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration",
         "Périphérique reconnu, intégration en cours": "Erkanntes Gerät, Integration läuft"
+    },
+    "info.json": {
+        "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.": ""
     }
 }

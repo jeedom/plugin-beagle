@@ -6,7 +6,7 @@ This plugin is a plugin allowing compatibility with the Odace wireless range wit
 
 # Setup 
 
-## Setup du plugin : 
+## Plugin configuration : 
 
 > **Tip**
 >

@@ -6,7 +6,7 @@ Este plugin é compatível com a gama Odace Sans Fil Sans Pile da Schneider.
 
 # Configuração 
 
-## Configuração du plugin : 
+## Configuração do plugin : 
 
 > **Dica**
 >

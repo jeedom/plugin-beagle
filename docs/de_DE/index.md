@@ -6,7 +6,7 @@ Dieses Plugin ist ein Plugin, das die Kompatibilität mit der Odace Sans Fil San
 
 # Konfiguration 
 
-## Konfiguration du plugin : 
+## Plugin Konfiguration : 
 
 > **Spitze**
 >
