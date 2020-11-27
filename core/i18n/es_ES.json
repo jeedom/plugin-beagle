@@ -99,7 +99,7 @@
     },
     "plugins\/beagle\/core\/ajax\/beagle.ajax.php": {
         "401 - Accès non autorisé": "401 - Acceso no autorizado",
-        "Beagle eqLogic non trouvé : ": "",
+        "Beagle eqLogic non trouvé : ": "Beagle eqLogic not found :",
         "Aucune méthode correspondante à : ": "Ningún método correspondiente a:"
     },
     "plugins\/beagle\/core\/class\/beagle.class.php": {
