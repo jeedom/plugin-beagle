@@ -73,12 +73,12 @@ def send(payload):
     valid = checkpayload(payload)
     if valid:
         logging.debug('Payload is valid sending : ' + str(payload))
-        #os.system('sudo hciconfig hci0 up')
-        os.system('sudo hcitool -i hci0 cmd 0x08 0x0008 1F '+ str(payload))
-        os.system('sudo hcitool -i hci0 cmd 0x08 0x0006 A0 00 A0 00 03 00 00 00 00 00 00 00 00 07 00')
-        os.system('sudo hcitool -i hci0 cmd 0x08 0x000a 01')
+        #os.system('sudo hciconfig hci'+str(globals.IFACE_DEVICE) + ' up')
+        os.system('sudo hcitool -i hci'+str(globals.IFACE_DEVICE) + ' cmd 0x08 0x0008 1F '+ str(payload))
+        os.system('sudo hcitool -i hci'+str(globals.IFACE_DEVICE) + ' cmd 0x08 0x0006 A0 00 A0 00 03 00 00 00 00 00 00 00 00 07 00')
+        os.system('sudo hcitool -i hci'+str(globals.IFACE_DEVICE) + ' cmd 0x08 0x000a 01')
         time.sleep(0.5)
-        os.system('sudo hcitool -i hci0 cmd 0x08 0x000a 00')
+        os.system('sudo hcitool -i hci'+str(globals.IFACE_DEVICE) + ' cmd 0x08 0x000a 00')
     else:
         logging.debug('Invalid Payload : ' + str(payload))
 
