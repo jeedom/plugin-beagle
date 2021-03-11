@@ -21,7 +21,7 @@ sudo pip3 install pyudev
 echo 75 > ${PROGRESS_FILE}
 sudo pip3 install wheel
 echo 80 > ${PROGRESS_FILE}
-sudo pip3 install cryptography
+sudo pip3 install cryptography==2.6.1
 echo 90 > ${PROGRESS_FILE}
 sudo pip3 install pybluez
 echo 99 > ${PROGRESS_FILE}
