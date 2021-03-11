@@ -5,23 +5,23 @@
         "Port clef bluetooth": "Bluetooth Port Schlüssel",
         "Aucun": "Ohne",
         "Port socket interne": "Interner Socket-Port",
-        "55556": "",
+        "55556": "55556",
         "Cycle (s)": "Zyklus (e)",
-        "0.1": ""
+        "0.1": "0.1"
     },
     "plugins\/beagle\/desktop\/modal\/health.php": {
-        "Mes devices Odace SFSP": "",
+        "Mes devices Odace SFSP": "Mes devices Odace SFSP",
         "Image": "Bild",
         "Odace SFSP": "Odace SFSP",
         "ID": "Identifikation",
         "Modèle": "Modell",
-        "Firmware": "",
-        "Uuid": "",
+        "Firmware": "Firmware",
+        "Uuid": "Uuid",
         "Mac": "MAC",
         "Dernière communication": "Letzte Mitteilung",
         "Date création": "Erstellungsdatum",
-        "Mes scènes Odace SFSP": "",
-        "Mes groupes Odace SFSP": ""
+        "Mes scènes Odace SFSP": "Mes scènes Odace SFSP",
+        "Mes groupes Odace SFSP": "Mes groupes Odace SFSP"
     },
     "plugins\/beagle\/desktop\/php\/beagle.php": {
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Sie befinden sich im Scanmodus. Klicken Sie erneut auf die Scan-Schaltfläche, um diesen Modus zu verlassen (andernfalls bleibt der Modus eine Minute lang aktiv)",
@@ -33,11 +33,11 @@
         "Scènes": "Szenen",
         "Groupes": "Gruppen",
         "Rechercher": "Suchen nach",
-        "Mes devices Odace SFSP": "",
-        "Mes scènes Odace SFSP": "",
-        "Mes groupes Odace SFSP": "",
+        "Mes devices Odace SFSP": "Mes devices Odace SFSP",
+        "Mes scènes Odace SFSP": "Mes scènes Odace SFSP",
+        "Mes groupes Odace SFSP": "Mes groupes Odace SFSP",
         "Recréer les commandes": "Befehle neu erstellen",
-        "Trame pairing": "",
+        "Trame pairing": "Trame pairing",
         "Configuration avancée": "Erweiterte Konfiguration",
         "Sauvegarder": "Speichern",
         "Supprimer": "Löschen",
@@ -49,8 +49,8 @@
         "Objet parent": "Übergeordnetes Objekt",
         "Catégorie": "Kategorie",
         "Modèle": "Modell",
-        "Uuid": "",
-        "Firmware": "",
+        "Uuid": "Uuid",
+        "Firmware": "Firmware",
         "Mac": "MAC",
         "Pairé": "Paar",
         "Ajouter une commande": "Kommando hinzufügen",
@@ -58,7 +58,7 @@
         "Paramètres": "Einstellungen"
     },
     "plugins\/beagle\/desktop\/js\/beagle.js": {
-        "Santé Odace SFSP": "",
+        "Santé Odace SFSP": "Santé Odace SFSP",
         "Nom": "Name",
         "Min": "Niedrig",
         "Max": "Max",
@@ -72,7 +72,7 @@
         "Arrêter Scan": "Scan beenden",
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Sie befinden sich im Scanmodus. Klicken Sie erneut auf die Scan-Schaltfläche, um diesen Modus zu verlassen (andernfalls bleibt der Modus eine Minute lang aktiv)",
         "Lancer Scan": "Starten Sie den Scan",
-        "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page": "",
+        "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page",
         "Recharge configuration": "Konfiguration aufladen",
         "Recharger la configuration": "Konfiguration neu laden",
         "Sélectionner le mode de rechargement de la configuration ?": "Wählen Sie den Konfigurations-Reload-Modus?",
@@ -83,15 +83,15 @@
         "Démarrer": "Start",
         "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "Möchten Sie wirklich alle Befehle neu erstellen? Dadurch werden vorhandene Bestellungen gelöscht",
         "Opération réalisée avec succès": "Vorgang erfolgreich abgeschlossen",
-        "Sélectionner le type de scènes que vous voulez rafraichir !": "",
-        "Les scènes Schneider": "",
-        "Les scènes Customers": "",
-        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ": "",
-        " ? Cela peut durer un petit moment.": "",
-        "Demande de scènes ": "",
-        " en cours ...": "",
-        "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.": "",
-        "Demande de groupes en cours ...": ""
+        "Sélectionner le type de scènes que vous voulez rafraichir !": "Sélectionner le type de scènes que vous voulez rafraichir !",
+        "Les scènes Schneider": "Les scènes Schneider",
+        "Les scènes Customers": "Les scènes Customers",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ": "Etes-vous sûr de vouloir demander à tous les modules leurs scènes",
+        " ? Cela peut durer un petit moment.": "? Cela peut durer un petit moment",
+        "Demande de scènes ": "Demande de scènes",
+        " en cours ...": "en cours",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.": "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment",
+        "Demande de groupes en cours ...": "Demande de groupes en cours"
     },
     "plugins\/beagle\/core\/php\/jeeBeagle.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "Sie sind nicht berechtigt, diese Aktion auszuführen",
@@ -99,18 +99,18 @@
     },
     "plugins\/beagle\/core\/ajax\/beagle.ajax.php": {
         "401 - Accès non autorisé": "401 - Nicht autorisierter Zugriff",
-        "Beagle eqLogic non trouvé : ": "",
+        "Beagle eqLogic non trouvé : ": "Beagle eqLogic non trouvé :",
         "Aucune méthode correspondante à : ": "Keine Methode entsprechend:"
     },
     "plugins\/beagle\/core\/class\/beagle.class.php": {
-        "Nouveau module detecté ' . $_def['data']['uuid']": "",
+        "Nouveau module detecté ' . $_def['data']['uuid']": "Nouveau module detecté ' . $_def['data']['uuid']",
         "Information manquante pour ajouter l\\'équipement. Inclusion impossible": "Fehlende Informationen zum Hinzufügen von Geräten. Unmöglich einzuschließen",
-        "Pas de configuration pour ce modèle": "",
-        "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']": "",
+        "Pas de configuration pour ce modèle": "Pas de configuration pour ce modèle",
+        "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']": "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']",
         "Veuillez vérifier la configuration": "Bitte überprüfen Sie die Konfiguration",
         "Périphérique reconnu, intégration en cours": "Erkanntes Gerät, Integration läuft"
     },
     "info.json": {
-        "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.": ""
+        "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.": "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes"
     }
 }
