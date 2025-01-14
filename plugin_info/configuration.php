@@ -15,45 +15,45 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
+require_once __DIR__ . '/../../../core/php/core.inc.php';
 include_file('core', 'authentification', 'php');
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accès non autorisé}}');
+    throw new Exception('{{401 - Accès non autorisé}}');
 }
 ?>
 <form class="form-horizontal">
     <fieldset>
-    <legend><i class="icon loisir-darth"></i> {{Démon}}</legend>
-		 <div class="form-group">
-	<label class="col-lg-4"></label>
-	</div>
-       <div class="form-group">
-        <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
-        <div class="col-sm-2">
-            <select class="configKey form-control" data-l1key="port">
-                <option value="none">{{Aucun}}</option>
-                <?php
-foreach (jeedom::getBluetoothMapping() as $name => $value) {
-	echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
-}
-?>
-           </select>
-       </div>
-   </div>
-   <div class="form-group">
-    <label class="col-lg-4 control-label">{{Port socket interne}}</label>
-    <div class="col-lg-2">
-        <input class="configKey form-control" data-l1key="socketport" placeholder="{{55556}}" />
-    </div>
-</div>
+        <legend><i class="icon loisir-darth"></i> {{Démon}}</legend>
+        <div class="form-group">
+            <label class="col-lg-4"></label>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label">{{Port clef bluetooth}}</label>
+            <div class="col-sm-2">
+                <select class="configKey form-control" data-l1key="port">
+                    <option value="none">{{Aucun}}</option>
+                    <?php
+                    foreach (jeedom::getBluetoothMapping() as $name => $value) {
+                        echo '<option value="' . $name . '">' . $name . ' (' . $value . ')</option>';
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">{{Port socket interne}}</label>
+            <div class="col-lg-2">
+                <input class="configKey form-control" data-l1key="socketport" placeholder="{{55556}}" />
+            </div>
+        </div>
 
-   <div class="form-group">
-    <label class="col-lg-4 control-label">{{Cycle (s)}}</label>
-    <div class="col-lg-2">
-        <input class="configKey form-control" data-l1key="cycle" placeholder="{{0.1}}" />
-    </div>
-</div>
-</fieldset>
+        <div class="form-group">
+            <label class="col-lg-4 control-label">{{Cycle (s)}}</label>
+            <div class="col-lg-2">
+                <input class="configKey form-control" data-l1key="cycle" placeholder="{{0.1}}" />
+            </div>
+        </div>
+    </fieldset>
 </form>
 <script>
 

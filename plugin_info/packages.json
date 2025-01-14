@@ -1,0 +1,23 @@
+{
+  "apt": {
+    "python3-setuptools": {},
+    "rfkill": {},
+    "python3-dev": {},
+    "libffi-dev": {},
+    "libssl-dev": {},
+    "libbluetooth-dev": {},
+    "bluetooth": {},
+    "build-essential": {}
+  },
+  "pip3": {
+    "wheel": {},
+    "requests": {},
+    "pybluez": {},
+    "cryptography": {
+      "version": "38.0.0"
+    }
+  },
+  "post-install": {
+    "script": "plugins/beagle/resources/post_install.sh"
+  }
+}

@@ -1,9 +1,7 @@
 # coding: utf-8
 import time
-import struct
 import os
 import binascii
-import base64
 import globals
 import logging
 from cryptography.hazmat.backends import default_backend

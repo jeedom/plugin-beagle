@@ -1,12 +1,5 @@
-import os
-import sys
-import struct
-import bluetooth._bluetooth as bluez
 import globals
 import logging
-import binascii
-import _thread as thread
-import time
 
 class Beagle():
     def __init__(self,trame,mac):
@@ -216,7 +209,7 @@ class Beagle():
             self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
-    
+
     def generic(self):
         self.result['model'] = 'generic'
         self.string += 'This is a Generic with UUID '+ self.uuid

@@ -15,11 +15,9 @@ DEBUG = False
 # NOTE: Python's struct.pack() will add padding bytes unless you make the endianness explicit. Little endian
 # should be used for BLE. Always start a struct.pack() format string with "<"
 
-import os
 import sys
 import struct
 import bluetooth._bluetooth as bluez
-import globals
 import logging
 from beagle import Beagle
 
@@ -166,4 +164,3 @@ def parse_events(sock, loop_count=100):
     except Exception as e:
         logging.debug(str(e))
     return myFullList
-
