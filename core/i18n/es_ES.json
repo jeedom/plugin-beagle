@@ -10,7 +10,7 @@
         "0.1": "0.1"
     },
     "plugins\/beagle\/desktop\/modal\/health.php": {
-        "Mes devices Odace SFSP": "Mes devices Odace SFSP",
+        "Mes devices Odace SFSP": "Mis dispositivos Odace SFSP",
         "Image": "Imagen",
         "Odace SFSP": "Odace SFSP",
         "ID": "Identificación",
@@ -20,8 +20,8 @@
         "Mac": "Mac",
         "Dernière communication": "Última comunicación",
         "Date création": "Fecha de creación",
-        "Mes scènes Odace SFSP": "Mes scènes Odace SFSP",
-        "Mes groupes Odace SFSP": "Mes groupes Odace SFSP"
+        "Mes scènes Odace SFSP": "Mis escenas Odace SFSP",
+        "Mes groupes Odace SFSP": "Mis grupos Odace SFSP"
     },
     "plugins\/beagle\/desktop\/php\/beagle.php": {
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Estás en modo de escaneo. Haga clic nuevamente en el botón de escaneo para salir de este modo (de lo contrario, el modo permanecerá activo durante un minuto)",
@@ -33,9 +33,9 @@
         "Scènes": "Escenas",
         "Groupes": "Grupos",
         "Rechercher": "Buscar",
-        "Mes devices Odace SFSP": "Mes devices Odace SFSP",
-        "Mes scènes Odace SFSP": "Mes scènes Odace SFSP",
-        "Mes groupes Odace SFSP": "Mes groupes Odace SFSP",
+        "Mes devices Odace SFSP": "Mis dispositivos Odace SFSP",
+        "Mes scènes Odace SFSP": "Mis escenas de Odace SFSP",
+        "Mes groupes Odace SFSP": "Mis groupos Odace SFSP",
         "Recréer les commandes": "Recrea comandos",
         "Trame pairing": "Trame pairing",
         "Configuration avancée": "Configuración avanzada",
@@ -58,7 +58,7 @@
         "Paramètres": "Configuraciones"
     },
     "plugins\/beagle\/desktop\/js\/beagle.js": {
-        "Santé Odace SFSP": "Santé Odace SFSP",
+        "Santé Odace SFSP": "Salud Odace SFSP",
         "Nom": "Nombre",
         "Min": "Bajo",
         "Max": "Max",
@@ -72,7 +72,7 @@
         "Arrêter Scan": "Stop Scan",
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "Estás en modo de escaneo. Haga clic nuevamente en el botón de escaneo para salir de este modo (de lo contrario, el modo permanecerá activo durante un minuto)",
         "Lancer Scan": "Iniciar escaneo",
-        "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page": "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page",
+        "Un périphérique vient d\\'être inclu. Veuillez réactualiser la page": "Se acaba de incluir un dispositivo. Por favor actualiza la página",
         "Recharge configuration": "Configuración de recarga",
         "Recharger la configuration": "Recargar configuración",
         "Sélectionner le mode de rechargement de la configuration ?": "Seleccione el modo de recarga de configuración?",
@@ -83,15 +83,15 @@
         "Démarrer": "Comienzo",
         "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "¿Seguro que quieres recrear todos los comandos? Esto eliminará los pedidos existentes",
         "Opération réalisée avec succès": "Operación completada con éxito",
-        "Sélectionner le type de scènes que vous voulez rafraichir !": "Sélectionner le type de scènes que vous voulez rafraichir !",
-        "Les scènes Schneider": "Les scènes Schneider",
-        "Les scènes Customers": "Les scènes Customers",
-        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ": "Etes-vous sûr de vouloir demander à tous les modules leurs scènes",
-        " ? Cela peut durer un petit moment.": "? Cela peut durer un petit moment",
-        "Demande de scènes ": "Demande de scènes",
-        " en cours ...": "en cours",
-        "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.": "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment",
-        "Demande de groupes en cours ...": "Demande de groupes en cours"
+        "Sélectionner le type de scènes que vous voulez rafraichir !": "¡Selecciona el tipo de escenas que deseas actualizar!",
+        "Les scènes Schneider": "Las escenas de Schneider",
+        "Les scènes Customers": "Escenas de Customers",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs scènes ": "¿Estás seguro de que quieres preguntar a todos los módulos por sus escenas?",
+        " ? Cela peut durer un petit moment.": "? Esto puede durar un poco",
+        "Demande de scènes ": "Solicitud de escenas",
+        " en cours ...": "en curso",
+        "Etes-vous sûr de vouloir demander à tous les modules leurs groupes ? Cela peut durer un petit moment.": "¿Estás seguro de que quieres preguntar a todos los módulos por sus grupos? Esto puede durar un poco",
+        "Demande de groupes en cours ...": "Solicitud de grupo en curso"
     },
     "plugins\/beagle\/core\/php\/jeeBeagle.php": {
         "Vous n\\'etes pas autorisé à effectuer cette action": "No tiene autorización para realizar esta acción",
@@ -103,14 +103,14 @@
         "Aucune méthode correspondante à : ": "Ningún método correspondiente a:"
     },
     "plugins\/beagle\/core\/class\/beagle.class.php": {
-        "Nouveau module detecté ' . $_def['data']['uuid']": "Nouveau module detecté ' . $_def['data']['uuid']",
+        "Nouveau module detecté ' . $_def['data']['uuid']": "Nuevo módulo detectado'. $_def['datos']['uuid']",
         "Information manquante pour ajouter l\\'équipement. Inclusion impossible": "Falta información para agregar equipo. Imposible incluir",
-        "Pas de configuration pour ce modèle": "Pas de configuration pour ce modèle",
-        "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']": "Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid']",
+        "Pas de configuration pour ce modèle": "No hay configuración para este modelo",
+        "Module inclu avec succès ' . $_def['model'] . ' ' . $_def['uuid']": "Module inclu avec succès ' . $_def['model'] . ' ' . $_def['uuid']",
         "Veuillez vérifier la configuration": "Por favor verifique la configuración",
         "Périphérique reconnu, intégration en cours": "Dispositivo reconocido, integración en progreso"
     },
     "info.json": {
-        "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.": "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes"
+        "Plugin ajoutant le support de la gamme Odace SFSP (sans fil sans pile) Schneider à Jeedom. Il permet d'obtenir les informations des interrupteurs (volets\/ scènes \/ simple \/ double). Il permet de contrôler les actionneurs (volet\/dcl). Il permet aussi de pouvoir utiliser les scènes et les groupes.": "Complemento que agrega soporte para la gama Schneider Odace SFSP (inalámbrica sin batería) a Jeedom. Permite obtener información de los interruptores (persianas\/escenas\/simples\/dobles). Permite controlar los actuadores (persiana\/dcl). También te permite utilizar escenas y grupos"
     }
 }
