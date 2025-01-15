@@ -17,6 +17,7 @@ DEBUG = False
 
 import sys
 import struct
+import time
 import bluetooth._bluetooth as bluez
 import logging
 from beagle import Beagle
@@ -126,7 +127,6 @@ def parse_events(sock, loop_count=100):
         bluez.hci_filter_all_events(flt)
         bluez.hci_filter_set_ptype(flt, bluez.HCI_EVENT_PKT)
         sock.setsockopt(bluez.SOL_HCI, bluez.HCI_FILTER, flt)
-        myFullList = []
         for i in range(0, loop_count):
             pkt = sock.recv(255)
             ptype, event, plen = struct.unpack("BBB", pkt[:3])
@@ -161,6 +161,7 @@ def parse_events(sock, loop_count=100):
                         mac = packed_bdaddr_to_string(pkt[report_pkt_offset + 3:report_pkt_offset + 9])
                         Beagle(trame, mac).parse()
         sock.setsockopt(bluez.SOL_HCI, bluez.HCI_FILTER, old_filter)
+        time.sleep(0.1)
     except Exception as e:
         logging.debug("Exception in ble_scan : %s", e)
-    return myFullList
+        time.sleep(1)

@@ -12,10 +12,13 @@
   "pip3": {
     "wheel": {},
     "requests": {},
-    "pybluez": {},
+    "setuptools": {
+      "version": "58.0.0"
+    },
     "cryptography": {
       "version": "38.0.0"
-    }
+    },
+    "pybluez": {}
   },
   "post-install": {
     "script": "plugins/beagle/resources/post_install.sh"

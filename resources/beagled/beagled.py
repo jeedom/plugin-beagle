@@ -24,7 +24,7 @@ import traceback
 import blescan
 import subprocess
 import sendadv
-import _thread as thread
+from threading import Thread
 
 import bluetooth._bluetooth as bluez
 
@@ -32,7 +32,7 @@ from jeedom.jeedom import jeedom_socket, jeedom_utils, jeedom_com, JEEDOM_SOCKET
 import globals
 
 
-def read_socket(name):
+def read_socket():
     while 1:
         try:
             if not JEEDOM_SOCKET_MESSAGE.empty():
@@ -76,7 +76,7 @@ def read_socket(name):
         time.sleep(0.1)
 
 
-def heartbeat_handler(delay):
+def heartbeat_handler():
     while 1:
         if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60) < int(time.time()):
             globals.LEARN_MODE = False
@@ -88,17 +88,17 @@ def heartbeat_handler(delay):
 def listen():
     jeedom_socket.open()
     try:
-        thread.start_new_thread(read_socket, ('socket',))
+        Thread(target=read_socket, daemon=True).start()
         logging.debug('Read Socket Thread Launched')
-        thread.start_new_thread(ble_scan, ('scanner',))
+        Thread(target=ble_scan, daemon=True).start()
         logging.debug('Ble Scanner Thread Launched')
-        thread.start_new_thread(heartbeat_handler, (19,))
+        Thread(target=heartbeat_handler, daemon=True).start()
         logging.debug('Heartbeat Thread Launched')
     except KeyboardInterrupt:
         shutdown()
 
 
-def ble_scan(name):
+def ble_scan():
     while not globals.READY:
         time.sleep(1)
     dev_id = globals.IFACE_DEVICE
@@ -110,7 +110,7 @@ def ble_scan(name):
         while True:
             blescan.parse_events(sock, 10)
     except Exception as e:
-        print("Error accessing bluetooth device...: %s", e)
+        logging.error("Error accessing bluetooth device...: %s", e)
         sys.exit(1)
 
 
@@ -134,7 +134,7 @@ def shutdown():
         pass
     logging.debug("Exit 0")
     sys.stdout.flush()
-    os._exit(0)
+    sys.exit(0)
 
 # ----------------------------------------------------------------------------
 
@@ -159,7 +159,6 @@ parser.add_argument("--sockethost", help="Socket Host", type=str)
 parser.add_argument("--jeedomkey", help="Jeedom Key", type=str)
 args = parser.parse_args()
 
-
 if args.device:
     _device = args.device
 if args.socketport:
@@ -182,14 +181,13 @@ if args.jeedomkey:
 jeedom_utils.set_log_level(_log_level)
 logging.info('Start beagled')
 logging.info('Log level : %s', _log_level)
-logging.info('Socket port : %s', _socket_port)
-logging.info('Socket host : %s', _sockethost)
+logging.debug('Socket port : %s', _socket_port)
+logging.debug('Socket host : %s', _sockethost)
 logging.info('Device : %s', _device)
-logging.info('PID file : %s', _pidfile)
-logging.info('Apikey : %s', _apikey)
-logging.info('Callback : %s', _callback)
-logging.info('Cycle : %s', _cycle)
-logging.info('JeedomKey : %s', globals.jeedomkey)
+logging.debug('PID file : %s', _pidfile)
+logging.debug('Callback : %s', _callback)
+logging.debug('Cycle : %s', _cycle)
+logging.debug('JeedomKey : %s', globals.jeedomkey)
 signal.signal(signal.SIGINT, handler)
 signal.signal(signal.SIGTERM, handler)
 globals.IFACE_DEVICE = int(_device[-1:])
