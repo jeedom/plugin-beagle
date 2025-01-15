@@ -1,8 +1,9 @@
 import globals
 import logging
 
+
 class Beagle():
-    def __init__(self,trame,mac):
+    def __init__(self, trame, mac):
         self.trame = trame
         self.mac = mac
         self.string = ''
@@ -11,7 +12,7 @@ class Beagle():
         self.type = ''
         self.datatrame = ''
         self.data = {}
-        self.result={}
+        self.result = {}
         self.ignore = 0
         self.repeat = 0
         self.repeateruuid = ''
@@ -19,27 +20,27 @@ class Beagle():
 
     def parse(self):
         try:
-            if self.trame[0:14] in ['0201041bffb602','0201061bffb602']:
+            if self.trame[0:14] in ['0201041bffb602', '0201061bffb602']:
                 self.datatrame = self.trame[22:]
-                self.uuid=self.datatrame[2:8]
+                self.uuid = self.datatrame[2:8]
                 cleanedtrame = self.trame[0:30]+'00'+self.trame[32:]
                 if self.uuid in globals.lastevent and globals.lastevent[self.uuid] == cleanedtrame:
-                    self.ignore=1
+                    self.ignore = 1
                 globals.lastevent[self.uuid] = cleanedtrame
                 self.result['mac'] = self.mac
-                self.string =''
+                self.string = ''
                 self.string += 'Beagle found '
                 self.type = self.trame[14:18]
-                self.cf= self.datatrame[:2]
-                self.uuid=self.datatrame[2:8]
+                self.cf = self.datatrame[:2]
+                self.uuid = self.datatrame[2:8]
                 self.result['uuid'] = self.uuid
                 self.data['type'] = ''
-                repetitionData = str(bin(int(self.trame[30:32],16)))[2:].ljust(8,'0')
-                if (repetitionData[1:2] == '0' and repetitionData[2:4]!= '00') :
+                repetitionData = str(bin(int(self.trame[30:32], 16)))[2:].ljust(8, '0')
+                if (repetitionData[1:2] == '0' and repetitionData[2:4] != '00'):
                     self.repeat = 1
-                elif (repetitionData[1:2] == '1' and repetitionData[2:4]!= '11') :
+                elif (repetitionData[1:2] == '1' and repetitionData[2:4] != '11'):
                     self.repeat = 1
-                if (self.repeat == 1) :
+                if (self.repeat == 1):
                     if (self.uuid in globals.KNOWN_DEVICES):
                         self.type = globals.types[globals.KNOWN_DEVICES[self.uuid]['model']]
                         self.string += ' (repeated data) '
@@ -69,16 +70,16 @@ class Beagle():
                 if self.data['type'] == 'binding':
                     if self.uuid not in globals.KNOWN_DEVICES:
                         if not globals.LEARN_MODE:
-                            logging.debug('It\'s a beagle device but this device is not Included and I\'am not in learn mode ' +str(self.uuid))
+                            logging.debug('It\'s a beagle device but this device is not Included and I\'am not in learn mode %s', self.uuid)
                             return
                         else:
-                            logging.debug('It\'s a beagle device but this device is not Included. I\'am learning it ' +str(self.uuid))
+                            logging.debug('It\'s a beagle device but this device is not Included. I\'am learning it %s', self.uuid)
                             globals.LEARN_MODE = False
                 else:
                     if self.uuid not in globals.KNOWN_DEVICES:
-                        logging.debug('It\'s a beagle device but this device is not Included and its not a binding data ' +str(self.uuid))
+                        logging.debug('It\'s a beagle device but this device is not Included and its not a binding data %s', self.uuid)
                         return
-                globals.JEEDOM_COM.add_changes('devices::'+self.uuid,self.result)
+                globals.JEEDOM_COM.add_changes('devices::' + self.uuid, self.result)
         except Exception as e:
             logging.debug(str(e))
 
@@ -140,7 +141,7 @@ class Beagle():
 
     def dcl(self):
         self.result['model'] = 'dcl'
-        self.string += 'This is a DCL with UUID '+ self.uuid
+        self.string += 'This is a DCL with UUID ' + self.uuid
         if self.cf == '10':
             self.data['type'] = 'advertisement'
             self.string += ' advertisement'
@@ -167,8 +168,8 @@ class Beagle():
                 self.string += ' unpaired'
             self.data['groups'] ={}
             group1uuid = self.trame[36:44]
-            self.data['groups'][group1uuid]={'data':{}}
-            self.string += ' group1 : ' +group1uuid
+            self.data['groups'][group1uuid] = {'data': {}}
+            self.string += ' group1 : ' + group1uuid
             if self.trame[44:46] == '01':
                 self.data['groups'][group1uuid]['data']['value'] = '1'
                 self.data['groups'][group1uuid]['data']['label'] = 'Allumé'
@@ -178,8 +179,8 @@ class Beagle():
                 self.data['groups'][group1uuid]['data']['label'] = 'Eteint'
                 self.string += ' state is OFF'
             group2uuid = self.trame[46:54]
-            self.data['groups'][group2uuid]={'data':{}}
-            self.string += ' group2 : ' +group2uuid
+            self.data['groups'][group2uuid] = {'data': {}}
+            self.string += ' group2 : ' + group2uuid
             if self.trame[54:56] == '01':
                 self.data['groups'][group2uuid]['data']['value'] = '1'
                 self.data['groups'][group2uuid]['data']['label'] = 'Allumé'
@@ -200,19 +201,19 @@ class Beagle():
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '1d':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'schneider'
             self.string += ' schneiderscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46], self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
 
     def generic(self):
         self.result['model'] = 'generic'
-        self.string += 'This is a Generic with UUID '+ self.uuid
+        self.string += 'This is a Generic with UUID ' + self.uuid
         if self.cf == '20':
             self.data['type'] = 'advertisement'
             self.string += ' advertisement'
@@ -237,10 +238,10 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
-            self.data['groups'] ={}
+            self.data['groups'] = {}
             group1uuid = self.trame[36:44]
-            self.data['groups'][group1uuid]={'data':{}}
-            self.string += ' group1 : ' +group1uuid
+            self.data['groups'][group1uuid] = {'data': {}}
+            self.string += ' group1 : ' + group1uuid
             if self.trame[44:46] == '01':
                 self.data['groups'][group1uuid]['data']['value'] = '1'
                 self.data['groups'][group1uuid]['data']['label'] = 'Allumé'
@@ -250,8 +251,8 @@ class Beagle():
                 self.data['groups'][group1uuid]['data']['label'] = 'Eteint'
                 self.string += ' state is OFF'
             group2uuid = self.trame[46:54]
-            self.data['groups'][group2uuid]={'data':{}}
-            self.string += ' group2 : ' +group2uuid
+            self.data['groups'][group2uuid] = {'data': {}}
+            self.string += ' group2 : ' + group2uuid
             if self.trame[54:56] == '01':
                 self.data['groups'][group2uuid]['data']['value'] = '1'
                 self.data['groups'][group2uuid]['data']['label'] = 'Allumé'
@@ -272,19 +273,19 @@ class Beagle():
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46],self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '2d':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'schneider'
             self.string += ' schneiderscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46], self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return
 
     def shutter(self):
         self.result['model'] = 'shutter'
-        self.string += 'This is a Shutter with UUID '+ self.uuid
+        self.string += 'This is a Shutter with UUID ' + self.uuid
         if self.cf == '30':
             self.data['type'] = 'advertisement'
             self.data['firmware'] = self.trame[58:62]
@@ -299,17 +300,17 @@ class Beagle():
                 self.string += ' state is closed'
             elif self.trame[32:34] == '05':
                 self.data['label'] = 'Ouverture'
-                position = 100-int(self.trame[44:46],16)
+                position = 100-int(self.trame[44:46], 16)
                 self.data['value'] = position
                 self.string += ' state is moving up'
             elif self.trame[32:34] == '06':
                 self.data['label'] = 'Fermeture'
-                position = 100-int(self.trame[44:46],16)
+                position = 100-int(self.trame[44:46], 16)
                 self.data['value'] = position
                 self.string += ' state is moving down'
             elif self.trame[32:34] == '07':
                 self.data['label'] = 'Arrêté'
-                position = 100-int(self.trame[44:46],16)
+                position = 100-int(self.trame[44:46], 16)
                 self.data['value'] = position
                 self.string += ' state is stopped with position ' + str(position)
             elif self.trame[32:34] == '10':
@@ -324,10 +325,10 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
-            self.data['groups'] ={}
+            self.data['groups'] = {}
             group1uuid = self.trame[36:44]
-            self.data['groups'][group1uuid]={'data':{}}
-            self.string += ' group1 : ' +group1uuid
+            self.data['groups'][group1uuid] = {'data': {}}
+            self.string += ' group1 : ' + group1uuid
             if self.trame[44:46] == '00':
                 self.data['groups'][group1uuid]['data']['value'] = '100'
                 self.data['groups'][group1uuid]['label'] = 'Ouvert'
@@ -346,8 +347,8 @@ class Beagle():
                 self.data['groups'][group1uuid]['data']['label'] = 'Arrêté'
                 self.string += ' state is stopped'
             group2uuid = self.trame[46:54]
-            self.data['groups'][group2uuid]={'data':{}}
-            self.string += ' group2 : ' +group2uuid
+            self.data['groups'][group2uuid] = {'data': {}}
+            self.string += ' group2 : ' + group2uuid
             if self.trame[54:56] == '00':
                 self.data['groups'][group2uuid]['data']['value'] = '100'
                 self.data['groups'][group2uuid]['data']['label'] = 'Ouvert'
@@ -371,18 +372,18 @@ class Beagle():
         elif self.cf == '3b':
             self.data['type'] = 'group'
             self.string += ' group'
-            self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
+            self.data['groups'] = [self.trame[38:46], self.trame[46:54]]
             self.string += ' ' + str(self.data['groups'])
         elif self.cf == '3c':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46], self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '3d':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'schneider'
             self.string += ' schneiderscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54],self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46], self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         return

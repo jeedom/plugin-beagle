@@ -22,8 +22,6 @@ import json
 import argparse
 import traceback
 import blescan
-import sys
-import time
 import subprocess
 import sendadv
 import _thread as thread
@@ -37,11 +35,10 @@ import globals
 def read_socket(name):
     while 1:
         try:
-            global JEEDOM_SOCKET_MESSAGE
             if not JEEDOM_SOCKET_MESSAGE.empty():
                 logging.debug("Message received in socket JEEDOM_SOCKET_MESSAGE")
                 message = JEEDOM_SOCKET_MESSAGE.get().decode('utf-8')
-                message =json.loads(message)
+                message = json.loads(message)
                 if message['apikey'] != _apikey:
                     logging.error("Invalid apikey from socket : %s", message)
                     return
@@ -50,14 +47,14 @@ def read_socket(name):
                     logging.debug('Enter in learn mode')
                     globals.LEARN_MODE = True
                     globals.LEARN_BEGIN = int(time.time())
-                    globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 1})
+                    globals.JEEDOM_COM.send_change_immediate({'learn_mode': 1})
                 elif message['cmd'] == 'ready':
                     logging.debug('Daemon is ready')
                     globals.READY = True
                 elif message['cmd'] == 'learnout':
                     logging.debug('Leave learn mode')
                     globals.LEARN_MODE = False
-                    globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0})
+                    globals.JEEDOM_COM.send_change_immediate({'learn_mode': 0})
                 elif message['cmd'] == 'add':
                     logging.debug('Add device : %s', message['device'])
                     if 'uuid' in message['device']:
@@ -70,33 +67,36 @@ def read_socket(name):
                     logging.debug('Known devices ' + str(globals.KNOWN_DEVICES))
                 elif message['cmd'] == 'bind':
                     logging.debug('Binding device : %s', message['uuid'])
-                    sendadv.sendCmd(globals.KNOWN_DEVICES[message['uuid']],'pair')
+                    sendadv.sendCmd(globals.KNOWN_DEVICES[message['uuid']], 'pair')
                 elif message['cmd'] == 'send':
                     logging.debug('Sending to device : %s', message['target'])
-                    sendadv.sendCmd(globals.KNOWN_DEVICES[message['target']],'advertisement',message['command'])
+                    sendadv.sendCmd(globals.KNOWN_DEVICES[message['target']], 'advertisement', message['command'])
         except Exception as e:
             logging.error('Exception on socket : %s', e)
         time.sleep(0.1)
 
+
 def heartbeat_handler(delay):
     while 1:
-        if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60)  < int(time.time()):
+        if globals.LEARN_MODE and (globals.LEARN_BEGIN + 60) < int(time.time()):
             globals.LEARN_MODE = False
             logging.debug('Quitting learn mode (60s elapsed)')
-            globals.JEEDOM_COM.send_change_immediate({'learn_mode' : 0})
+            globals.JEEDOM_COM.send_change_immediate({'learn_mode': 0})
         time.sleep(1)
+
 
 def listen():
     jeedom_socket.open()
     try:
-        thread.start_new_thread( read_socket, ('socket',))
+        thread.start_new_thread(read_socket, ('socket',))
         logging.debug('Read Socket Thread Launched')
-        thread.start_new_thread( ble_scan, ('scanner',))
+        thread.start_new_thread(ble_scan, ('scanner',))
         logging.debug('Ble Scanner Thread Launched')
-        thread.start_new_thread( heartbeat_handler, (19,))
+        thread.start_new_thread(heartbeat_handler, (19,))
         logging.debug('Heartbeat Thread Launched')
     except KeyboardInterrupt:
         shutdown()
+
 
 def ble_scan(name):
     while not globals.READY:
@@ -109,8 +109,8 @@ def ble_scan(name):
         blescan.hci_enable_le_scan(sock)
         while True:
             blescan.parse_events(sock, 10)
-    except:
-        print("Error accessing bluetooth device...")
+    except Exception as e:
+        print("Error accessing bluetooth device...: %s", e)
         sys.exit(1)
 
 
@@ -119,6 +119,7 @@ def ble_scan(name):
 def handler(signum=None, frame=None):
     logging.debug("Signal %i caught, exiting...", signum)
     shutdown()
+
 
 def shutdown():
     logging.debug("Shutdown")
@@ -136,6 +137,7 @@ def shutdown():
     os._exit(0)
 
 # ----------------------------------------------------------------------------
+
 
 _log_level = "error"
 _socket_port = 55556
@@ -173,9 +175,9 @@ if args.pid:
 if args.cycle:
     _cycle = float(args.cycle)
 if args.sockethost:
-   _sockethost = args.sockethost
+    _sockethost = args.sockethost
 if args.jeedomkey:
-   globals.jeedomkey = args.jeedomkey
+    globals.jeedomkey = args.jeedomkey
 
 jeedom_utils.set_log_level(_log_level)
 logging.info('Start beagled')
@@ -200,11 +202,11 @@ try:
     logging.debug('Bluetooth Mac adress is %s', bt_mac)
     globals.donglemac = bt_mac
     jeedom_utils.write_pid(_pidfile)
-    globals.JEEDOM_COM = jeedom_com(apikey = _apikey,url = _callback,cycle=_cycle)
+    globals.JEEDOM_COM = jeedom_com(apikey=_apikey, url=_callback, cycle=_cycle)
     if not globals.JEEDOM_COM.test():
         logging.error('Network communication issues. Please fixe your Jeedom network configuration.')
         shutdown()
-    jeedom_socket = jeedom_socket(port=_socket_port,address=_socket_host)
+    jeedom_socket = jeedom_socket(port=_socket_port, address=_socket_host)
     listen()
 except Exception as e:
     logging.error('Fatal error : %s', e)
