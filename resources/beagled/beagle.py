@@ -166,7 +166,7 @@ class Beagle():
             elif self.trame[32:34] == '13':
                 self.data['paired'] = 'unpaired'
                 self.string += ' unpaired'
-            self.data['groups'] ={}
+            self.data['groups'] = {}
             group1uuid = self.trame[36:44]
             self.data['groups'][group1uuid] = {'data': {}}
             self.string += ' group1 : ' + group1uuid
@@ -195,13 +195,13 @@ class Beagle():
         elif self.cf == '1b':
             self.data['type'] = 'group'
             self.string += ' group'
-            self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
+            self.data['groups'] = [self.trame[38:46], self.trame[46:54]]
             self.string += ' ' + str(self.data['groups'])
         elif self.cf == '1c':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54], self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46], self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '1d':
             self.data['type'] = 'scene'
@@ -267,13 +267,13 @@ class Beagle():
         elif self.cf == '2b':
             self.data['type'] = 'group'
             self.string += ' group'
-            self.data['groups'] = [self.trame[38:46],self.trame[46:54]]
+            self.data['groups'] = [self.trame[38:46], self.trame[46:54]]
             self.string += ' ' + str(self.data['groups'])
         elif self.cf == '2c':
             self.data['type'] = 'scene'
             self.data['subtype'] = 'custom'
             self.string += ' customerscene'
-            self.data['scenes'] = [self.trame[38:46],self.trame[46:54], self.trame[54:62]]
+            self.data['scenes'] = [self.trame[38:46], self.trame[46:54], self.trame[54:62]]
             self.string += ' ' + str(self.data['scenes'])
         elif self.cf == '2d':
             self.data['type'] = 'scene'

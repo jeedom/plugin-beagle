@@ -140,7 +140,7 @@ def parse_events(sock, loop_count=100):
                 subevent, = struct.unpack("B", bytes([pkt[3]]))
                 pkt = pkt[4:]
                 if subevent == EVT_LE_CONN_COMPLETE:
-                    le_handle_connection_complete(pkt)
+                    le_handle_connection_complete(pkt)  # FIXME: undefined function
                 elif subevent == EVT_LE_ADVERTISING_REPORT:
                     # logging.debug("advertising report")
                     num_reports = struct.unpack("B", bytes([pkt[0]]))[0]
