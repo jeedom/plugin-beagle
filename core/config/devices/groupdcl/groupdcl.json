@@ -36,7 +36,8 @@
 				"logicalId": "ac:on",
 				"display": {
 					"icon": "<i class=\"icon jeedom-lumiere-on\"></i>"
-				}
+				},
+				"value": "Etat"
 			},
 			{
 				"name": "Off",
@@ -48,7 +49,8 @@
 				"logicalId": "ac:off",
 				"display": {
 					"icon": "<i class=\"icon jeedom-lumiere-off\"></i>"
-				}
+				},
+				"value": "Etat"
 			},
 			{
 				"name": "Toggle",
