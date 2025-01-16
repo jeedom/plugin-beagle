@@ -6,12 +6,11 @@
 >
 >As a reminder if there is no information on the update, it means that it only concerns the updating of documentation, translation or text
 
-# 
-
-- 
-- 
-- .
-- 
+- Fix une fuite de mémoire sur le démon
+- Corrections mineures
+- "
+- Jeedom 4.4 ou plus requis
+- Debian 11 ou plus requis
 
 # 03/11/2021
 
