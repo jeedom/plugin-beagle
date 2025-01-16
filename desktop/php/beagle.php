@@ -228,25 +228,25 @@ if (config::byKey('include_mode', 'beagle', 0) == 1) {
           </fieldset>
         </form>
       </div>
-    </div>
-    <div role="tabpanel" class="tab-pane" id="commandtab">
-      <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Ajouter une commande}}</a><br /><br />
-      <table id="table_cmd" class="table table-bordered table-condensed">
-        <thead>
-          <tr>
-            <th style="min-width:200px;width:350px;">{{Nom}}</th>
-            <th>{{Type}}</th>
-            <th style="min-width:260px;">{{Options}}</th>
-            <th>{{Etat}}</th>
-            <th style="min-width:80px;width:200px;">{{Actions}}</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+
+      <div role="tabpanel" class="tab-pane" id="commandtab">
+        <a class="btn btn-success btn-sm cmdAction pull-right" data-action="add" style="margin-top:5px;"><i class="fa fa-plus-circle"></i> {{Ajouter une commande}}</a><br /><br />
+        <table id="table_cmd" class="table table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th style="min-width:200px;width:350px;">{{Nom}}</th>
+              <th>{{Type}}</th>
+              <th style="min-width:260px;">{{Options}}</th>
+              <th>{{Etat}}</th>
+              <th style="min-width:80px;width:200px;">{{Actions}}</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
 </div>
 
 <?php include_file('desktop', 'beagle', 'js', 'beagle'); ?>
