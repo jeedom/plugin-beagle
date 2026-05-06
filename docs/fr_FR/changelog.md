@@ -11,6 +11,7 @@
 - Fix une fuite de mémoire sur le démon
 - Corrections mineures
 - Adapatations interface "Liste des commandes"
+- Corrections des traductions
 - Jeedom 4.4 ou plus requis
 - Debian 11 ou plus requis
 
