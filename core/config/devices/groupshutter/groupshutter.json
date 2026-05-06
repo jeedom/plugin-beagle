@@ -1,68 +1,71 @@
 {
-    "groupshutter": {
-        "name": "Groupe Volets",
-		"category" : {"automatism" :1},
-        "commands": [{
-              "name": "Position",
-              "type": "info",
-              "subtype": "numeric",
-              "isVisible": 1,
-              "isHistorized": 1,
-              "unite": "%",
-              "logicalId": "data::value",
+	"groupshutter": {
+		"name": "Groupe Volets",
+		"category": {
+			"automatism": 1
+		},
+		"commands": [
+			{
+				"name": "Position",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 1,
+				"unite": "%",
+				"logicalId": "data::value",
 				"template": {
 					"dashboard": "shutter",
 					"mobile": "shutter"
 				}
-          },
-            {
-                "name": "Statut",
-                "type": "info",
-                "subtype": "string",
-                "isVisible": 1,
-                "isHistorized": 1,
-                "unite": "",
-                "logicalId": "data::label"
-            },
-      			{
-      				"name": "Haut",
-      				"type": "action",
-      				"subtype": "other",
-      				"isVisible": 1,
-      				"isHistorized": 0,
-      				"unite": "",
-      				"logicalId": "ac:up",
-      				"display": {
-      					"icon": "<i class=\"fas fa-arrow-up\"></i>",
-      					"generic_type": "FLAP_UP"
-      				}
-      			},
-      			{
-      				"name": "Bas",
-      				"type": "action",
-      				"subtype": "other",
-      				"isVisible": 1,
-      				"isHistorized": 0,
-      				"unite": "",
-      				"logicalId": "ac:down",
-      				"display": {
-      					"icon": "<i class=\"fas fa-arrow-down\"></i>",
-      					"generic_type": "FLAP_DOWN"
-      			}
-          },
-    			{
-    				"name": "Stop",
-    				"type": "action",
-    				"subtype": "other",
-    				"isVisible": 1,
-    				"isHistorized": 0,
-    				"unite": "",
-    				"logicalId": "ac:stop",
-    				"display": {
-    					"icon": "<i class=\"fa fa-stop\"></i>",
-    					"generic_type": "FLAP_STOP"
-    			}
-    			}
-        ]
-    }
+			},
+			{
+				"name": "Statut",
+				"type": "info",
+				"subtype": "string",
+				"isVisible": 1,
+				"isHistorized": 1,
+				"unite": "",
+				"logicalId": "data::label"
+			},
+			{
+				"name": "Haut",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"logicalId": "ac:up",
+				"display": {
+					"icon": "<i class=\"fas fa-arrow-up\"></i>",
+					"generic_type": "FLAP_UP"
+				}
+			},
+			{
+				"name": "Bas",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"logicalId": "ac:down",
+				"display": {
+					"icon": "<i class=\"fas fa-arrow-down\"></i>",
+					"generic_type": "FLAP_DOWN"
+				}
+			},
+			{
+				"name": "Stop",
+				"type": "action",
+				"subtype": "other",
+				"isVisible": 1,
+				"isHistorized": 0,
+				"unite": "",
+				"logicalId": "ac:stop",
+				"display": {
+					"icon": "<i class=\"fa fa-stop\"></i>",
+					"generic_type": "FLAP_STOP"
+				}
+			}
+		]
+	}
 }

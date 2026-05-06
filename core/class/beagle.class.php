@@ -47,6 +47,7 @@ class beagle extends eqLogic {
             ));
             return false;
         }
+        /** @var beagle */
         $beagle = beagle::byLogicalId($_def['uuid'], 'beagle');
         if (!is_object($beagle)) {
             $beagle = new beagle();
@@ -62,27 +63,17 @@ class beagle extends eqLogic {
         event::add('jeedom::alert', array(
             'level' => 'warning',
             'page' => 'beagle',
-            'message' => __('Module inclu avec succès ' .$_def['model'].' ' . $_def['uuid'], __FILE__),
+            'message' => __('Module inclu avec succès ' . $_def['model'] . ' ' . $_def['uuid'], __FILE__),
         ));
-        self::changeIncludeState(0,1);
+        self::changeIncludeState(0, 1);
         return $beagle;
     }
 
     public static function generateKey() {
-      $randHexStr = implode( array_map( function() { return dechex( mt_rand( 0, 15 ) ); }, array_fill( 0, 24, null ) ) );
-      return $randHexStr;
-  	}
-
-    public static function dependancy_info() {
-        $return = array();
-        $return['progress_file'] = jeedom::getTmpFolder('beagle') . '/dependance';
-        $return['state'] = 'ok';
-        return $return;
-    }
-
-    public static function dependancy_install() {
-        log::remove(__CLASS__ . '_update');
-        return array('script' => dirname(__FILE__) . '/../../resources/install_#stype#.sh ' . jeedom::getTmpFolder('beagle') . '/dependance', 'log' => log::getPathToLog(__CLASS__ . '_update'));
+        $randHexStr = implode(array_map(function () {
+            return dechex(mt_rand(0, 15));
+        }, array_fill(0, 24, null)));
+        return $randHexStr;
     }
 
     public static function deamon_info() {
@@ -104,22 +95,22 @@ class beagle extends eqLogic {
     public static function deamon_start() {
         self::deamon_stop();
         $deamon_info = self::deamon_info();
-        if (config::byKey('jeedomKey', 'beagle','') == ''){
+        if (config::byKey('jeedomKey', 'beagle', '') == '') {
             config::save('jeedomKey', self::generateKey(), 'beagle');
         }
         if ($deamon_info['launchable'] != 'ok') {
             throw new Exception(__('Veuillez vérifier la configuration', __FILE__));
         }
-		$unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
-      	if (config::byKey('port', 'beagle','none') == 'none') {
-          foreach (jeedom::getBluetoothMapping() as $name => $value) {
-           		config::save('port', $name ,'beagle');
-            	break;
-          }
+        $unlock = exec('sudo rfkill unblock all >/dev/null 2>&1');
+        if (config::byKey('port', 'beagle', 'none') == 'none') {
+            foreach (jeedom::getBluetoothMapping() as $name => $value) {
+                config::save('port', $name, 'beagle');
+                break;
+            }
         }
         $port = jeedom::getBluetoothMapping(config::byKey('port', 'beagle'));
-        $beagle_path = realpath(dirname(__FILE__) . '/../../resources/beagled');
-        $cmd = 'sudo /usr/bin/python3 ' . $beagle_path . '/beagled.py';
+        $beagle_path = realpath(__DIR__ . '/../../resources/beagled');
+        $cmd = system::getCmdSudo() . system::getCmdPython3(__CLASS__) . "{$beagle_path}/beagled.py";
         $cmd .= ' --device ' . $port;
         $cmd .= ' --loglevel ' . log::convertLogLevel(log::getLogLevel('beagle'));
         $cmd .= ' --socketport ' . config::byKey('socketport', 'beagle');
@@ -128,8 +119,9 @@ class beagle extends eqLogic {
         $cmd .= ' --apikey ' . jeedom::getApiKey('beagle');
         $cmd .= ' --cycle ' . config::byKey('cycle', 'beagle');
         $cmd .= ' --jeedomkey ' . config::byKey('jeedomKey', 'beagle');
+
         log::add('beagle', 'debug', 'Lancement démon beagle : ' . $cmd);
-        $result = exec($cmd . ' >> ' . log::getPathToLog('beagle') . ' 2>&1 &');
+        $result = exec($cmd . ' >> ' . log::getPathToLog('beagle_daemon') . ' 2>&1 &');
         $i = 0;
         while ($i < 5) {
             $deamon_info = self::deamon_info();
@@ -146,7 +138,7 @@ class beagle extends eqLogic {
         message::removeAll('beagle', 'unableStartDeamon');
         config::save('include_mode', 0, 'beagle');
         sleep(2);
-		self::sendIdToDeamon();
+        self::sendIdToDeamon();
         $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'ready'));
         self::socket_connection($value);
         return true;
@@ -164,6 +156,7 @@ class beagle extends eqLogic {
     }
 
     public static function sendIdToDeamon() {
+        /** @var beagle */
         foreach (self::byType('beagle') as $eqLogic) {
             $eqLogic->allowDevice();
             usleep(500);
@@ -172,8 +165,8 @@ class beagle extends eqLogic {
 
     public static function devicesParameters($_device = '') {
         $return = array();
-        foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
-            $path = dirname(__FILE__) . '/../config/devices/' . $dir;
+        foreach (ls(__DIR__ . '/../config/devices', '*') as $dir) {
+            $path = __DIR__ . '/../config/devices/' . $dir;
             if (!is_dir($path)) {
                 continue;
             }
@@ -185,7 +178,6 @@ class beagle extends eqLogic {
                         $return += json_decode($content, true);
                     }
                 } catch (Exception $e) {
-
                 }
             }
         }
@@ -211,25 +203,25 @@ class beagle extends eqLogic {
         }
     }
 
-    public function getModelListParam($_conf = '') {
-  		$json = self::devicesParameters($_conf);
-  		$haspairing = false;
-  		$hasFirmMac = false;
-  		if (isset($json['configuration'])) {
-  			if (isset($json['configuration']['haspairing']) && $json['configuration']['haspairing'] == 1) {
-  				$haspairing = true;
-  			}
-  		}
-		if (!in_array(substr($_conf,0,5),array('scene','group'))){
-			$hasFirmMac = True;
-		}
-  		return [$haspairing,$hasFirmMac];
-  	}
+    public static function getModelListParam($_conf = '') {
+        $json = self::devicesParameters($_conf);
+        $haspairing = false;
+        $hasFirmMac = false;
+        if (isset($json['configuration'])) {
+            if (isset($json['configuration']['haspairing']) && $json['configuration']['haspairing'] == 1) {
+                $haspairing = true;
+            }
+        }
+        if (!in_array(substr($_conf, 0, 5), array('scene', 'group'))) {
+            $hasFirmMac = True;
+        }
+        return [$haspairing, $hasFirmMac];
+    }
 
     public static function socket_connection($_value) {
         $deamon_info = self::deamon_info();
         if ($deamon_info['state'] != 'ok') {
-            log::add('beagle','debug','Daemon is not launched, please launch daemon');
+            log::add('beagle', 'debug', 'Daemon is not launched, please launch daemon');
             return;
         }
         if (config::byKey('port', 'beagle', 'none') != 'none') {
@@ -241,12 +233,12 @@ class beagle extends eqLogic {
     }
 
     public function postSave() {
-		if ($this->getConfiguration('applyDevice','') != $this->getConfiguration('device')) {
-			$this->applyModuleConfiguration();
-		} else {
-			$this->allowDevice();
-		}
-	}
+        if ($this->getConfiguration('applyDevice', '') != $this->getConfiguration('device')) {
+            $this->applyModuleConfiguration();
+        } else {
+            $this->allowDevice();
+        }
+    }
 
     public function preRemove() {
         $this->disallowDevice();
@@ -257,9 +249,9 @@ class beagle extends eqLogic {
         if ($this->getLogicalId() != '') {
             $value['device'] = array(
                 'uuid' => $this->getLogicalId(),
-                'model' => $this->getConfiguration('device',''),
-                'mac' => $this->getConfiguration('mac',''),
-                'type' => $this->getConfiguration('type',''),
+                'model' => $this->getConfiguration('device', ''),
+                'mac' => $this->getConfiguration('mac', ''),
+                'type' => $this->getConfiguration('type', ''),
             );
             $value = json_encode($value);
             self::socket_connection($value);
@@ -275,97 +267,97 @@ class beagle extends eqLogic {
     }
 
     public function applyModuleConfiguration() {
-		    $this->setConfiguration('applyDevice', $this->getConfiguration('device'));
-		    $this->save();
+        $this->setConfiguration('applyDevice', $this->getConfiguration('device'));
+        $this->save();
         if ($this->getConfiguration('device') == '') {
-			       return true;
-		    }
-		      $device = self::devicesParameters($this->getConfiguration('device'));
-		        if (!is_array($device)) {
-			           return true;
-		             }
-		event::add('jeedom::alert', array(
-			'level' => 'warning',
-			'page' => 'beagle',
-			'message' => __('Périphérique reconnu, intégration en cours', __FILE__),
-		));
-		$this->import($device);
-		sleep(2);
-		event::add('jeedom::alert', array(
-			'level' => 'warning',
-			'page' => 'beagle',
-			'message' => '',
-		));
-	}
+            return true;
+        }
+        $device = self::devicesParameters($this->getConfiguration('device'));
+        if (!is_array($device)) {
+            return true;
+        }
+        event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'beagle',
+            'message' => __('Périphérique reconnu, intégration en cours', __FILE__),
+        ));
+        $this->import($device);
+        sleep(2);
+        event::add('jeedom::alert', array(
+            'level' => 'warning',
+            'page' => 'beagle',
+            'message' => '',
+        ));
+    }
 
-  public function binding() {
-      if ($this->getLogicalId() == '') {
-          return;
-      }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer','generic'))) {
-          return;
-      }
-      $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'bind', 'uuid' => $this->getLogicalId()));
-      self::socket_connection($value);
-  }
+    public function binding() {
+        if ($this->getLogicalId() == '') {
+            return;
+        }
+        if (!in_array($this->getConfiguration('device', 'switch'), array('shutter', 'dcl', 'plug', 'dimmer', 'generic'))) {
+            return;
+        }
+        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'bind', 'uuid' => $this->getLogicalId()));
+        self::socket_connection($value);
+    }
 
-  public function getgroups() {
-      if ($this->getLogicalId() == '') {
-          return;
-      }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer','generic'))) {
-          return;
-      }
-      $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => "groups")));
-      self::socket_connection($value);
-      sleep(1);
-  }
+    public function getgroups() {
+        if ($this->getLogicalId() == '') {
+            return;
+        }
+        if (!in_array($this->getConfiguration('device', 'switch'), array('shutter', 'dcl', 'plug', 'dimmer', 'generic'))) {
+            return;
+        }
+        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => "groups")));
+        self::socket_connection($value);
+        sleep(1);
+    }
 
-  public function getscenes($_type) {
-      if ($this->getLogicalId() == '') {
-          return;
-      }
-      if (!in_array($this->getConfiguration('device','switch'),array('shutter','dcl','plug','dimmer','generic'))) {
-          return;
-      }
-      $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => $_type)));
-      self::socket_connection($value);
-      sleep(1);
-  }
+    public function getscenes($_type) {
+        if ($this->getLogicalId() == '') {
+            return;
+        }
+        if (!in_array($this->getConfiguration('device', 'switch'), array('shutter', 'dcl', 'plug', 'dimmer', 'generic'))) {
+            return;
+        }
+        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $this->getLogicalId(), 'command' => array("ac" => $_type)));
+        self::socket_connection($value);
+        sleep(1);
+    }
 }
 
 class beagleCmd extends cmd {
-     public function execute($_options = null) {
-   		if ($this->getType() != 'action') {
-   			return;
-   		}
-   		$data = array();
-   		$eqLogic = $this->getEqLogic();
-   		$values = explode(',', $this->getLogicalId());
-   		foreach ($values as $value) {
-   			$value = explode(':', $value);
-   			if (count($value) == 2) {
-   				switch ($this->getSubType()) {
-   					case 'slider':
-   						$data[trim($value[0])] = trim(str_replace('#slider#', $_options['slider'], $value[1]));
-   						break;
-   					case 'color':
-   						$data[trim($value[0])] = trim(str_replace('#color#', $_options['color'], $value[1]));
-   						break;
-   					case 'select':
-   						$data[trim($value[0])] = trim(str_replace('#select#', $_options['select'], $value[1]));
-   						break;
-   					default:
-   						$data[trim($value[0])] = trim($value[1]);
-   				}
-   			}
-   		}
-   		if (count($data) == 0) {
-   			return;
-   		}
-   		$value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $eqLogic->getLogicalId(), 'command' => $data));
-		beagle::socket_connection($value);
-   	}
+    public function execute($_options = null) {
+        if ($this->getType() != 'action') {
+            return;
+        }
+        $data = array();
+        $eqLogic = $this->getEqLogic();
+        $values = explode(',', $this->getLogicalId());
+        foreach ($values as $value) {
+            $value = explode(':', $value);
+            if (count($value) == 2) {
+                switch ($this->getSubType()) {
+                    case 'slider':
+                        $data[trim($value[0])] = trim(str_replace('#slider#', $_options['slider'], $value[1]));
+                        break;
+                    case 'color':
+                        $data[trim($value[0])] = trim(str_replace('#color#', $_options['color'], $value[1]));
+                        break;
+                    case 'select':
+                        $data[trim($value[0])] = trim(str_replace('#select#', $_options['select'], $value[1]));
+                        break;
+                    default:
+                        $data[trim($value[0])] = trim($value[1]);
+                }
+            }
+        }
+        if (count($data) == 0) {
+            return;
+        }
+        $value = json_encode(array('apikey' => jeedom::getApiKey('beagle'), 'cmd' => 'send', 'target' => $eqLogic->getLogicalId(), 'command' => $data));
+        beagle::socket_connection($value);
+    }
 
     /*     * **********************Getteur Setteur*************************** */
 }

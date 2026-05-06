@@ -1,36 +1,38 @@
 {
-    "switch": {
-        "name": "Interrupteur",
-		"category" : {"automatism" :1},
-        "commands": [
-            {
-                "name": "Bouton",
-                "type": "info",
-                "subtype": "numeric",
-                "isVisible": 1,
-                "isHistorized": 1,
-                "unite": "",
-                "logicalId": "data::value",
+	"switch": {
+		"name": "Interrupteur",
+		"category": {
+			"automatism": 1
+		},
+		"commands": [
+			{
+				"name": "Bouton",
+				"type": "info",
+				"subtype": "numeric",
+				"isVisible": 1,
+				"isHistorized": 1,
+				"unite": "",
+				"logicalId": "data::value",
 				"template": {
 					"dashboard": "badge",
 					"mobile": "badge"
 				},
-                "configuration": {
-                "repeatEventManagement" : "always"
-                }
-            },
-            {            
-                "name": "Label",
-                "type": "info",
-                "subtype": "string",
-                "isVisible": 1,
-                "isHistorized": 1,
-                "unite": "",
-                "logicalId": "data::label",
-                "configuration": {
-                "repeatEventManagement" : "always"
-                }
-            }
-        ]
-    }
+				"configuration": {
+					"repeatEventManagement": "always"
+				}
+			},
+			{
+				"name": "Label",
+				"type": "info",
+				"subtype": "string",
+				"isVisible": 1,
+				"isHistorized": 1,
+				"unite": "",
+				"logicalId": "data::label",
+				"configuration": {
+					"repeatEventManagement": "always"
+				}
+			}
+		]
+	}
 }
