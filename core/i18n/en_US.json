@@ -21,6 +21,9 @@
         "Annuler": "Cancel",
         "Arrêter Scan": "Stop Scan",
         "Attention, \"En supprimant et recréant\" va supprimer les commandes existantes.": "Please note, \"By deleting and recreating\" will delete existing commands",
+        "Aucune": "None",
+        "Choisir une icône": "Choose an icon",
+        "Commande info liée": "Related command",
         "Demande de groupes en cours ...": "Groups request in progress",
         "Demande de scènes ": "Ask for the scenes",
         "Démarrer": "Start",
@@ -37,6 +40,7 @@
         "Liste de valeur|texte séparé par ;": "List of values | text separated by;",
         "Max": "Max",
         "Min": "Min",
+        "Nom de la commande": "Command name",
         "Opération réalisée avec succès": "Operation successfully completed",
         "Recharge configuration": "Recharge configuration",
         "Recharger la configuration": "Reload configuration",
@@ -103,9 +107,7 @@
         "Vous êtes en mode scan. Recliquez sur le bouton scan pour sortir de ce mode (sinon le mode restera actif une minute)": "You are in scan mode. Click again on the scan button to exit this mode (otherwise the mode will remain active for one minute)"
     },
     "plugins\/beagle\/plugin_info\/configuration.php": {
-        "0.1": "0.1",
         "401 - Accès non autorisé": "401 - Unauthorized access",
-        "55556": "55556",
         "Aucun": "None",
         "Cycle (s)": "Cycle (s)",
         "Démon": "Daemon",
