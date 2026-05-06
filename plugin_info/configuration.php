@@ -43,14 +43,14 @@ if (!isConnect('admin')) {
         <div class="form-group">
             <label class="col-lg-4 control-label">{{Port socket interne}}</label>
             <div class="col-lg-2">
-                <input class="configKey form-control" data-l1key="socketport" placeholder="{{55556}}" />
+                <input class="configKey form-control" data-l1key="socketport" placeholder="55556" />
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-lg-4 control-label">{{Cycle (s)}}</label>
             <div class="col-lg-2">
-                <input class="configKey form-control" data-l1key="cycle" placeholder="{{0.1}}" />
+                <input class="configKey form-control" data-l1key="cycle" placeholder="0.1" />
             </div>
         </div>
     </fieldset>
